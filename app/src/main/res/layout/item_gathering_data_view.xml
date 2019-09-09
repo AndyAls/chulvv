@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@color/white_color">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <!--户主信息-->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="户主：万丹丹"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+        <!--户主信息-->
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="户主：万丹丹"
+            android:textColor="@color/font_three_color"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/score_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所得积分：20.0"
+            android:textColor="@color/font_three_color"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"/>
+        <!--采集时间-->
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="采集时间：2018-12-03  12:20"
+            android:textColor="@color/font_three_color"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"/>
+        <!--地址-->
+        <TextView
+            android:id="@+id/useraddres_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址：杭州市西湖区文化街道99号"
+            android:textColor="@color/font_three_color"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/submit_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:background="@drawable/boc_check_status2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:clickable="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:layout_marginRight="15dp"/>
+</LinearLayout>

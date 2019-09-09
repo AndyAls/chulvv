@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_selector_white_default">
+    <ImageView
+        android:id="@+id/type_img"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/dp150"
+        tools:src="@drawable/dingdanhui"/>
+    <TextView
+        android:id="@+id/type_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:text="开始看"
+        android:textSize="@dimen/sp22"
+        android:layout_marginTop="6dp"/>
+</LinearLayout>

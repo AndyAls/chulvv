@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_theme_color">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    <include layout="@layout/empty_view" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10">
+    </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_login"
+        android:text="新增收货地址"
+        android:textColor="@color/white_color"
+        android:textSize="@dimen/sp18" />
+</LinearLayout>

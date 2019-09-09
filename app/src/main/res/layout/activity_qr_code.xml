@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_qrCode"
+        android:layout_marginTop="@dimen/dp50"
+        android:layout_width="@dimen/dp230"
+        android:layout_height="@dimen/dp245"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/qr_icon" />
+
+    <TextView
+        android:id="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp22"
+        android:layout_marginRight="@dimen/dp22"
+        android:layout_marginTop="@dimen/dp50"
+        android:gravity="center"
+        android:text="我的二维码"
+        android:padding="@dimen/dp18"
+        android:textColor="@color/text_color_normal"
+        android:textSize="16sp" />
+</LinearLayout>

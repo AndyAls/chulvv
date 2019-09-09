@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_theme_color"
+    android:orientation="vertical">
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:minWidth="@dimen/dp65"
+                android:text="姓    名"
+                android:textColor="@color/text_color_normal"
+                android:textSize="@dimen/sp16" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_editext_default"
+                android:gravity="center_vertical"
+                android:hint="请输入用户名.."
+                android:padding="@dimen/dp12"
+                android:text=""
+                android:textColor="@color/font_three_color"
+                android:textColorHint="@color/aa_color"
+                android:textSize="@dimen/sp15" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="手机号码"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:hint="请输入手机号码.."
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="回收物品"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入回收物品"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="详细地址"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入详细地址"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="数    量"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入数量"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="重    量"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_zhong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入重量"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="积    分"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_jifen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入积分"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:minWidth="@dimen/dp65"
+                    android:text="金    额"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp16" />
+
+                <EditText
+                    android:id="@+id/et_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_default"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp12"
+                    android:text=""
+                    android:hint="请输入金额"
+                    android:textColor="@color/font_three_color"
+                    android:textColorHint="@color/aa_color"
+                    android:textSize="@dimen/sp15" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/sub_but"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/bg_btn_login"
+                android:text="确定"
+                android:textColor="@color/white_color"
+                android:textSize="@dimen/sp18" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,278 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp220"
+            android:background="@drawable/me_head_bg"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/userinfoClick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_selector_default"
+                android:padding="@dimen/dp20">
+
+
+                <ImageView
+                    android:id="@+id/headImg"
+                    android:layout_width="@dimen/dp65"
+                    android:layout_height="@dimen/dp65"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/setting_icon" />
+
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/headImg"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/headImg"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="18sp"
+                    tools:text="尘pppolly" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/username"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/headImg"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="16sp"
+                    tools:text="恭喜你，已成为经销商" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/bg_item_pressed_default"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/wqiandai"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="足迹"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/myGroup"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_safe_me"
+                android:drawablePadding="16dp"
+                android:text="修改密码"
+                android:textColor="#FF333333"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_arrow_lift_item_me" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/myGroupLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:background="#dddddd"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/tihuoquan"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_selector_white_default">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_account_me"
+                android:drawablePadding="16dp"
+                android:text="修改手机号"
+                android:textColor="#FF333333"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_arrow_lift_item_me" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:background="#dddddd" />
+
+        <RelativeLayout
+            android:id="@+id/bt_set_font"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_selector_white_default">
+
+            <TextView
+                android:id="@+id/sallerCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_my_tuandui"
+                android:drawablePadding="16dp"
+                android:text="设置字体大小"
+                android:textColor="#FF333333"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_arrow_lift_item_me" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:background="#dddddd" />
+
+        <RelativeLayout
+            android:id="@+id/rl_qrcode"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_selector_white_default">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_me_qrcode"
+                android:drawablePadding="16dp"
+                android:text="我的二维码"
+                android:textColor="#FF333333"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_arrow_lift_item_me" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="50dp"
+            android:background="#dddddd" />
+
+        <RelativeLayout
+            android:id="@+id/rl_version"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:visibility="visible"
+            android:background="@drawable/bg_selector_white_default">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_phone_login"
+                android:drawablePadding="16dp"
+                android:text="开启使用手持(N5)"
+                android:textColor="#FF333333"
+                android:textSize="18sp" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchUseBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:switchPadding="@dimen/dp5"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="visible"
+            android:layout_marginLeft="50dp"
+            android:background="#dddddd" />
+
+
+        <Button
+            android:id="@+id/offline_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp22"
+            android:layout_marginRight="@dimen/dp22"
+            android:layout_marginTop="@dimen/dp30"
+            android:background="@drawable/bg_btn_login"
+            android:gravity="center"
+            android:text="退出登陆"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

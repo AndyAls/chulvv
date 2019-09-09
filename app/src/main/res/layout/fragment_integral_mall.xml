@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/white_color">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:textColor="@color/white_color"
+        android:text="积分商城"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:background="@color/colorPrimary"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_color"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+        <ListView
+            android:id="@+id/lv_menu"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:divider="@color/white_color"
+            android:dividerHeight="1dp"
+            android:background="@color/bg_theme_color">
+        </ListView>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/empty_view" />
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srlAccentColor="@android:color/white"
+                app:srlEnablePreviewInEditMode="true"
+                app:srlPrimaryColor="#7dddd5"
+                app:srlHeaderHeight="@dimen/dp120"
+                app:srlFooterHeight="@dimen/dp60">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/refresh"
+                    app:layout_srlSpinnerStyle="Scale"
+                    app:layout_srlBackgroundColor="@android:color/transparent"/>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:overScrollMode="never"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10">
+                </android.support.v7.widget.RecyclerView>
+
+                <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlAnimatingColor="@color/comm_header_color"
+                    />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

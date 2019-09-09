@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_empty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/comm_header_color"
+    android:drawableTop="@drawable/ic_empty_list"
+    android:text="暂无数据展示..."
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:drawablePadding="@dimen/dp5"
+    android:visibility="visible"
+    android:textSize="@dimen/sp15"
+    tools:showIn="@layout/fragment_integral_mall" />

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_qidian_bg"
+    android:orientation="vertical">
+
+
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="@dimen/dp200"
+        android:layout_centerInParent="true"
+        android:layout_height="@dimen/dp200"
+        android:visibility="gone"
+        android:src="@drawable/app_icon"/>
+
+    <Button
+        android:id="@+id/bt_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_back_press"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:text="退出登录"
+        android:visibility="gone"
+        android:textColor="@color/red"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp22"
+        android:layout_marginRight="@dimen/dp22"
+        android:background="@drawable/bg_btn_sign"
+        android:gravity="center"
+        android:text="扫一扫"
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_alignParentBottom="true"
+        android:layout_above="@id/bt_logout"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

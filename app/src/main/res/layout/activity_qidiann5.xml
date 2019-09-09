@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvTong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp20"
+        android:textSize="@dimen/sp16"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/tvTongHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/tvTong"
+        android:layout_marginTop="@dimen/dp10"
+        android:textSize="@dimen/sp16"
+        android:textColor="#000"
+        android:text="请确定桶的编号是否正确"/>
+
+    <TextView
+        android:id="@+id/tvCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/sp30"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:text="--"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/tvCode"
+        android:textSize="@dimen/sp30"
+        android:visibility="invisible"
+        android:layout_marginTop="@dimen/dp5"
+        android:textColor="@color/select_blue"
+        android:textStyle="bold"
+        android:text="请放入"/>
+
+    <Button
+        android:id="@+id/bt_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp22"
+        android:layout_marginRight="@dimen/dp22"
+        android:layout_marginTop="@dimen/dp50"
+        android:background="@drawable/bg_btn_sign"
+        android:gravity="center"
+        android:text="扫一扫"
+        android:layout_below="@id/tv"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/bt_huan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp52"
+        android:layout_marginRight="@dimen/dp52"
+        android:background="@drawable/bg_btn_sign"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="换一个桶"
+        android:layout_marginBottom="@dimen/dp20"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

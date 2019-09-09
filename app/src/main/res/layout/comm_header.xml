@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp68"
+    android:background="@drawable/header"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/task_topBar_layout">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            style="@style/task_topBar_finish"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_backward" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/task_topBar_title"
+            android:layout_centerInParent="true"
+            android:text="标题" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="15dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/ib_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="待上传"
+                android:textColor="@color/white_color"
+                android:textSize="@dimen/sp16"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginRight="15dp"/>
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/message_num_style"
+                android:text="9"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_gravity="right"
+                android:layout_marginLeft="@dimen/dp3"
+                android:layout_marginTop="@dimen/dp3"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/white_color" />
+        </FrameLayout>
+    </RelativeLayout>
+</LinearLayout>

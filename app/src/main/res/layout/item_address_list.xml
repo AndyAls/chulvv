@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/clickView"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_selector_white_default"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_address_manage"
+            android:drawablePadding="10dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:textColor="#FF333333"
+            android:textSize="14sp"
+            tools:text="你好"
+            />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#FF333333"
+            android:textSize="14sp"
+            tools:text="15158803366"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:textColor="#FF333333"
+        android:textSize="14sp"
+        tools:text="中华人民共和国"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="#e8e8e8"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <FrameLayout
+            android:id="@+id/defaulttClick"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/defaultt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:button="@drawable/selector_ckb_address_manage"
+                android:checked="true"
+                android:clickable="false"
+                android:enabled="false"
+                android:paddingLeft="6dp"
+                android:text="默认地址"
+                android:textColor="@color/color_ckb_address_manage"
+                android:textSize="12sp"
+                />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:drawableLeft="@drawable/ic_delete_address_manage"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#FF666666"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/delete"
+            android:drawableLeft="@drawable/ic_edit_address_manage"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:text="编辑"
+            android:textColor="#FF666666"
+            android:textSize="12sp"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp10"
+        android:background="@color/divider_color"/>
+
+</LinearLayout>

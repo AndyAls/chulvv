@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp220"
+            android:background="@drawable/me_head_bg"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/userinfoClick"
+                android:padding="@dimen/dp20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_selector_default">
+
+
+                <ImageView
+                    android:id="@+id/headImg"
+                    android:layout_width="@dimen/dp65"
+                    android:layout_height="@dimen/dp65"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/setting_icon" />
+
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/headImg"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/headImg"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="18sp"
+                    tools:text="尘pppolly" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/username"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/headImg"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="12sp"
+                    tools:text="恭喜你，已成为经销商" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/bg_item_pressed_default"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/wqiandai"
+                    android:gravity="center_vertical"
+                    android:text="足迹"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--分类-->
+        <com.qlckh.chunlvv.view.CustomGridView
+            android:id="@+id/classify_gd"
+            android:layout_marginTop="@dimen/dp18"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
