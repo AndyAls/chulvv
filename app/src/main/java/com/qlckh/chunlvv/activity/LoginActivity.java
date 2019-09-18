@@ -14,8 +14,10 @@ import com.hjq.permissions.XXPermissions;
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.api.TestActivity;
 import com.qlckh.chunlvv.base.BaseMvpActivity;
+import com.qlckh.chunlvv.common.XLog;
 import com.qlckh.chunlvv.dao.HomeDao;
 import com.qlckh.chunlvv.impl.LoginPresenterImpl;
+import com.qlckh.chunlvv.intelligent.IntenlligentMarkActivity;
 import com.qlckh.chunlvv.presenter.LoginPresenter;
 import com.qlckh.chunlvv.qidian.HomeSysActivity;
 import com.qlckh.chunlvv.user.UseDo;
@@ -26,9 +28,14 @@ import com.qlckh.chunlvv.view.BottomDialog;
 import com.qlckh.chunlvv.view.LoadingView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author Andy
@@ -162,11 +169,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             UserConfig.savaUserid(info.getData().getId());
             UserConfig.userInfo = info.getData();
             if (userType == 0) {
-                if (PhoneUtil.isN5s()){
-                    startActivity(new Intent(this, HomeSysActivity.class));
-                }else {
-                    startActivity(new Intent(this,ScanMarkActivity.class));
-                }
+                startActivity(new Intent(this, IntenlligentMarkActivity.class));
                 finish();
                 overridePendingTransition(0, 0);
 //                toMian();
@@ -195,23 +198,40 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_role:
+//                test();
 //                showRolePup();
                 break;
             case R.id.login_button:
-//                test();
                 login();
                 break;
             case R.id.bt1:
-                startActivity(new Intent(this,BluetoothDemo1.class));
+                startActivity(new Intent(this, BluetoothDemo1.class));
                 break;
             case R.id.bt2:
-                startActivity(new Intent(this,BluetoothDemo2.class));
+                startActivity(new Intent(this, BluetoothDemo2.class));
                 break;
             case R.id.bt3:
-                startActivity(new Intent(this,BluetoothDemo3.class));
+                startActivity(new Intent(this, BluetoothDemo3.class));
                 break;
             default:
         }
+    }
+
+    private void test() {
+
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                while (true) {
+                    e.onNext("222");
+                }
+            }
+        })
+                .throttleFirst(3, TimeUnit.SECONDS)
+                .subscribe(s -> {
+                    XLog.e("shuai", s);
+                });
     }
 
 

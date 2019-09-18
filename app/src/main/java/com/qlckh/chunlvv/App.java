@@ -2,7 +2,7 @@ package com.qlckh.chunlvv;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+import android.widget.ScrollView;
 
 import com.facebook.stetho.Stetho;
 import com.lsh.packagelibrary.CasePackageApp;
@@ -18,6 +18,9 @@ import com.tencent.bugly.Bugly;
 import com.tencent.smtt.sdk.QbSdk;
 
 import butterknife.ButterKnife;
+import uhf.AsyncSocketState;
+import uhf.MultiLableCallBack;
+import uhf.Reader;
 
 /**
  * @author Andy
@@ -29,6 +32,8 @@ public class App extends CasePackageApp {
     private static final String APPKEY = "55a0674a2a";
     private static App app;
     public LocationService locationService;
+    private Reader reader;
+    private AsyncSocketState socketState;
 
     @Override
     public void onCreate() {
@@ -50,6 +55,35 @@ public class App extends CasePackageApp {
         initHttp();
     }
 
+    /**
+     *
+     ReaderController = Reader(this)
+     val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
+     if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
+     tvSource.text = "扫描开启失败"
+     return
+     }
+     val socketState = ReaderController.GetClientInfo()[0]
+     ReaderController.SetPower(socketState, 0x12.toByte(), 0x12.toByte())
+     * @return  MultiLableCallBack
+     */
+    public Reader getReader(MultiLableCallBack callBack){
+        if (reader==null){
+            reader = new Reader(callBack);
+            reader.OpenSerialPort_Android("/dev/ttyS1");
+            if (reader.GetClientInfo() == null || reader.GetClientInfo().size() < 1) {
+                return null;
+            }
+            socketState = reader.GetClientInfo().get(0);
+//            reader.SetPower(socketState,(byte) 0xc,(byte) 0xc);
+        }
+        return reader;
+
+    }
+
+    public AsyncSocketState getSocketState(){
+        return socketState;
+    }
     private void initHttp() {
         /**
          * 全局请求的统一配置

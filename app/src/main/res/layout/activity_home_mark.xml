@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/dp12"
-    android:paddingRight="@dimen/dp12">
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12">
 
+    <TextView
+        android:id="@id/tvState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#3d3df4"
+        android:gravity="center"
+        android:padding="@dimen/dp12"
+        android:visibility="visible"
+        android:textStyle="bold"
+        android:text="蓝牙连接中...."/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp5"
         android:orientation="horizontal">
 
 
@@ -36,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
         android:orientation="horizontal">
 
 
@@ -62,7 +76,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
         android:text="评价"
         android:textColor="@color/dark_green"
         android:textSize="@dimen/sp22"
@@ -72,7 +86,7 @@
         android:id="@+id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
         android:orientation="horizontal">
 
 
@@ -148,6 +162,48 @@
         android:gravity="center_vertical">
 
         <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="称重:"
+            android:textSize="@dimen/sp22"
+            android:textColor="@color/text_color_normal"/>
+
+        <EditText
+            android:id="@+id/etWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="0"
+            android:paddingLeft="@dimen/dp35"
+            android:paddingRight="@dimen/dp35"
+            android:singleLine="true"
+            android:enabled="false"
+            android:paddingBottom="@dimen/dp3"
+            android:paddingTop="@dimen/dp3"
+            android:background="@drawable/bg_editext_default"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp22"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kg"
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textSize="@dimen/sp22"
+            android:textColor="@color/text_color_normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="拍照:"
@@ -173,12 +229,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp22"
         android:layout_marginRight="@dimen/dp22"
-        android:layout_marginTop="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp20"
         android:background="@drawable/bg_btn_sign"
         android:gravity="center"
         android:text="提交评价"
         android:layout_below="@id/iv"
         android:textColor="@color/white"
         android:textSize="16sp" />
-
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

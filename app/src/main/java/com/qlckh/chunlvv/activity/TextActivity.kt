@@ -1,10 +1,13 @@
 package com.qlckh.chunlvv.activity
 
 import android.app.AlertDialog
+import com.jakewharton.rxbinding2.view.RxView
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.base.BaseActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.activity_text.*
 import uhf.MultiLableCallBack
 import uhf.Reader
@@ -15,8 +18,8 @@ import uhf.Reader
  * Desc:
  */
 class TextActivity : BaseActivity(), MultiLableCallBack {
+    val create = PublishSubject.create<String>()
     override fun method(p0: String?) {
-
         val subscribe = Observable.just(p0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -34,8 +37,8 @@ class TextActivity : BaseActivity(), MultiLableCallBack {
     }
 
     lateinit var ReaderController: Reader
-    override fun initView() {
 
+    override fun initView() {
         ReaderController = Reader(this)
         val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS3")
         val socketState = ReaderController.GetClientInfo()[0]
@@ -59,6 +62,8 @@ class TextActivity : BaseActivity(), MultiLableCallBack {
     }
 
     override fun initDate() {
+
+
     }
 
     override fun release() {

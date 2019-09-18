@@ -69,8 +69,8 @@
             android:process=":remote" />
 
         <activity
-            android:name=".activity.TextActivity"
-            android:screenOrientation="portrait"
+            android:name=".intelligent.IntelligentLuanchActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/startAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -95,7 +95,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
@@ -106,11 +106,6 @@
             android:name=".activity.MarkActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name="com.lsh.packagelibrary.WebTwoActivity"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true">
-        </activity>
         <activity
             android:name=".activity.AttendanceActivity"
             android:screenOrientation="portrait" />
@@ -219,8 +214,13 @@
         <activity android:name=".qidian.N5ScanActivity" />
         <activity android:name=".qidian.PhoneScanActivity" />
         <activity android:name=".qidian.HomeSysActivity" />
-        <activity android:name=".qidian.HomeMarkActivity" />
+        <activity android:name=".qidian.HomeMarkActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".activity.ScanMarkActivity" />
+        <activity android:name=".intelligent.IntenlligentMarkActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".intelligent.IntelligentDelayActivity"
+            android:screenOrientation="landscape"/>
 
 
         <!-- FileProvider配置访问路径，适配7.0及其以上 -->

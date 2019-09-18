@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.qlckh.chunlvv.common.XLog;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +24,12 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.qlckh.chunlvv", appContext.getPackageName());
+        int i =10;
+        do {
+            i/=2;
+            XLog.e("test","++",i);
+        }while (i-->1);{
+            XLog.e("test","--",i);
+        }
     }
 }

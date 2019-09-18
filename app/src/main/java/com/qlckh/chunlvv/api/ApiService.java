@@ -409,9 +409,9 @@ public interface ApiService {
 
 
     @FormUrlEncoded
-    @POST("api/jqi/pfen")
+    @POST("api/jqi/pfen_news")
     Observable<Object> mark(@Field("n_code") String userId,@Field("status") int status,@Field("uid") String uid,
-                            @Field("img") String img,@Field("jifen") String jifen);
+                            @Field("img") String img,@Field("jifen") String jifen,@Field("weight")String wegit);
 
 
 }
