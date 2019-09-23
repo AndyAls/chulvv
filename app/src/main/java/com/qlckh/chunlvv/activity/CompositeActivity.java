@@ -180,7 +180,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
         listenerThread = new ListenerThread();
         listenerThread.start();
         tvState.setEnabled(false);
-//        searchDevices();
+        searchDevices();
 
     }
 
@@ -557,7 +557,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
             calibrationWeight = info.getCalibrationWeight();
             host = info.getHost();
             zeroAd = info.getZeroAd();
-            tcpConnect();
+//            tcpConnect();
         }
 
         homeDao = getIntent().getParcelableExtra(MarkActivity.HOME_DAO);
