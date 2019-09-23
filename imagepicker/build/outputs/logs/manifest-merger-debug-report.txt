@@ -1,0 +1,101 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+	package
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:3:5-34
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:2:1-43:12
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:4:5-63
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:7:5-83
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:7:22-81
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:9:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:11:5-79
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:11:22-77
+uses-permission#android.permission.CAMERA
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:13:5-64
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:13:22-62
+application
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:15:5-41:19
+activity#com.lzy.imagepicker.ui.ImageBaseActivity
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:16:9-57
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:16:19-55
+activity#com.lzy.imagepicker.ui.ImageGridActivity
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:17:9-20:54
+	android:configChanges
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:19:13-59
+	android:theme
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:20:13-52
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:18:13-49
+activity#com.lzy.imagepicker.ui.ImageCropActivity
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:21:9-25:54
+	android:hardwareAccelerated
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:24:13-48
+	android:configChanges
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:23:13-59
+	android:theme
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:25:13-52
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:22:13-49
+activity#com.lzy.imagepicker.ui.ImagePreviewActivity
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:26:9-29:64
+	android:configChanges
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:28:13-59
+	android:theme
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:29:13-62
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:27:13-52
+provider#com.lzy.imagepicker.ImagePickerProvider
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:31:9-39:20
+	android:grantUriPermissions
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:35:13-47
+	android:authorities
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:32:13-60
+	android:exported
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:34:13-37
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:33:13-48
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:36:13-38:57
+	android:resource
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:38:17-55
+	android:name
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml:37:17-67
+uses-sdk
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		ADDED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
+		INJECTED from D:\07chunlv\imagepicker\src\main\AndroidManifest.xml
