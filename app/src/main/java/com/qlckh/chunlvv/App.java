@@ -11,6 +11,7 @@ import com.qlckh.chunlvv.common.GlideApp;
 import com.qlckh.chunlvv.common.LocationService;
 import com.qlckh.chunlvv.common.XLog;
 import com.qlckh.chunlvv.http.RxHttpUtils;
+import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity;
 import com.qlckh.chunlvv.preview.GlideLoader;
 import com.qlckh.chunlvv.preview.ZoomMediaLoader;
 import com.qlckh.chunlvv.user.UserConfig;
@@ -18,6 +19,8 @@ import com.tencent.bugly.Bugly;
 import com.tencent.smtt.sdk.QbSdk;
 
 import butterknife.ButterKnife;
+import cat.ereza.customactivityoncrash.activity.DefaultErrorActivity;
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 import uhf.AsyncSocketState;
 import uhf.MultiLableCallBack;
 import uhf.Reader;
@@ -43,6 +46,23 @@ public class App extends CasePackageApp {
         Bugly.init(getApplicationContext(), APPKEY, true);
         Stetho.initializeWithDefaults(this);
         QbSdk.initX5Environment(this,null);
+        initCrash();
+    }
+
+    private void initCrash() {
+
+        CaocConfig.Builder.create()
+                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
+                .enabled(true) //default: true
+                .showErrorDetails(true) //default: true
+                .showRestartButton(true) //default: true
+                .logErrorOnRestart(true) //default: true
+                .trackActivities(true) //default: false
+                .minTimeBetweenCrashesMs(2000) //default: 3000
+                .errorDrawable(R.drawable.app_icon) //default: bug image
+                .restartActivity(IntelligentLuanchActivity.class) //default: null (your app's launch activity)
+                .errorActivity(DefaultErrorActivity.class) //default: null (default error activity)
+                .apply();
     }
 
     @Override

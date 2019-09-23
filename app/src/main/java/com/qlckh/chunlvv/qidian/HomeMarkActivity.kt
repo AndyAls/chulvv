@@ -33,12 +33,15 @@ import com.qlckh.chunlvv.user.UserConfig
 import com.qlckh.chunlvv.utils.Base64Util
 import com.qlckh.chunlvv.utils.ImgUtil
 import kotlinx.android.synthetic.main.activity_home_mark.*
+import kotlinx.android.synthetic.main.choose_dialog_cotent.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.ref.WeakReference
+import java.net.Socket
 import java.util.*
+import kotlin.concurrent.thread
 
 /**
  * @author Andy
@@ -54,36 +57,41 @@ class HomeMarkActivity : BaseActivity() {
     private var imgPath = ""
     private val BT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private val NAME = "BT_DEMO"
-    lateinit var bluetoothAdapter:BluetoothAdapter
-    lateinit var listenerThread:ListenerThread
-    lateinit var connectThread: ConnectThread
+    var bluetoothAdapter: BluetoothAdapter? = null
+    var listenerThread: ListenerThread? = null
+    var connectThread: ConnectThread? = null
     private var bluetoothDevice: BluetoothDevice? = null
     private val BUFFER_SIZE = 1024
+    var threadAq: Thread? = null
     override fun initView() {
         setTitle("易腐垃圾")
+        ibRight.visibility = View.VISIBLE
+        ibRight.setText("提交评价")
         initlistener()
         setPic()
-
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         listenerThread = ListenerThread()
-        listenerThread.start()
+        listenerThread!!.start()
         tvState.isEnabled = false
         searchDevices();
     }
 
     override fun goBack() {
-        startActivity(Intent(this,IntelligentDelayActivity::class.java))
-        finish()
+        val intent = Intent(this, IntelligentDelayActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
+
     /**
      * 搜索蓝牙设备
      */
     private fun searchDevices() {
-        if (bluetoothAdapter.isDiscovering) {
-            bluetoothAdapter.cancelDiscovery()
+        if (bluetoothAdapter!!.isDiscovering) {
+            bluetoothAdapter!!.cancelDiscovery()
         }
+        bluetoothAdapter!!.startDiscovery()
         getBoundedDevices()
-        bluetoothAdapter.startDiscovery()
+
     }
 
     /**
@@ -91,7 +99,7 @@ class HomeMarkActivity : BaseActivity() {
      */
     private fun getBoundedDevices() {
         //获取已经配对过的设备
-        val pairedDevices = bluetoothAdapter.bondedDevices
+        val pairedDevices = bluetoothAdapter!!.bondedDevices
         //将其添加到设备列表中
         if (pairedDevices.size > 0) {
             for (device in pairedDevices) {
@@ -102,6 +110,7 @@ class HomeMarkActivity : BaseActivity() {
             }
         }
     }
+
     /**
      * 连接蓝牙设备
      */
@@ -112,12 +121,13 @@ class HomeMarkActivity : BaseActivity() {
             val socket = device.createRfcommSocketToServiceRecord(BT_UUID)
             //启动连接线程
             connectThread = ConnectThread(socket, true)
-            connectThread.start()
+            connectThread!!.start()
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
     }
+
     /**
      * 监听线程
      */
@@ -127,13 +137,13 @@ class HomeMarkActivity : BaseActivity() {
 
         override fun run() {
             try {
-                serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, BT_UUID)
+                serverSocket = bluetoothAdapter!!.listenUsingRfcommWithServiceRecord(NAME, BT_UUID)
                 while (true) {
                     //线程阻塞，等待别的设备连接
                     socket = serverSocket!!.accept()
                     tvState.post { tvState.text = "蓝牙连接中" }
                     connectThread = ConnectThread(socket!!, false)
-                    connectThread.start()
+                    connectThread!!.start()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -142,20 +152,26 @@ class HomeMarkActivity : BaseActivity() {
         }
     }
 
+    internal lateinit var inputStream: InputStream
+    var copySocket: BluetoothSocket? = null
 
     /**
      * 连接线程
      */
-    inner class ConnectThread(val socket: BluetoothSocket,  val activeConnect: Boolean) : Thread() {
-        internal lateinit var inputStream: InputStream
-        internal var outputStream: OutputStream? = null
+    inner class ConnectThread(var socket: BluetoothSocket, val activeConnect: Boolean) : Thread() {
 
+        internal var outputStream: OutputStream? = null
         override fun run() {
             try {
                 //如果是自动连接 则调用连接方法
                 if (activeConnect) {
+
+//                    threadAq = thread {
                     socket.connect()
+//                    }
+
                 }
+
                 if (tvState != null) {
                     tvState.post { tvState.text = "蓝牙连接成功" }
                 }
@@ -182,7 +198,26 @@ class HomeMarkActivity : BaseActivity() {
 
                     }
                 }
+
             } catch (e: Exception) {
+                socket.close()
+                try {
+                    val method = socket.remoteDevice!!.javaClass.getMethod("createRfcommSocket", Int.javaClass)
+                    socket = method.invoke(socket.remoteDevice, 1) as BluetoothSocket
+                    socket.connect()
+                    copySocket = socket
+                } catch (e: Exception) {
+                    goBack()
+                }
+                try {
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                runOnUiThread {
+                    showLong(e.toString())
+                }
                 e.printStackTrace()
                 if (tvState != null) {
                     tvState.post(Runnable {
@@ -204,6 +239,9 @@ class HomeMarkActivity : BaseActivity() {
             return ""
         }
         val split = s.split("=".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (split.size < 1) {
+            return "0"
+        }
         val source = split[0]
         var reverse = reverse(source)
         val c = reverse[0]
@@ -216,9 +254,10 @@ class HomeMarkActivity : BaseActivity() {
     private fun reverse(str: String): String {
         return StringBuilder(str).reverse().toString()
     }
+
     private fun initlistener() {
 
-        submit.setOnClickListener {
+        ibRight.setOnClickListener {
             if (isDone) {
                 postData()
             } else {
@@ -233,7 +272,7 @@ class HomeMarkActivity : BaseActivity() {
     private fun postData() {
         loading()
         RxHttpUtils.createApi(ApiService::class.java)
-                .mark(intent.getStringExtra("ncode"), status, UserConfig.getUserid(),imgPath,tv_score.text.toString(),etWeight.text.toString())
+                .mark(intent.getStringExtra("ncode"), status, UserConfig.getUserid(), imgPath, tv_score.text.toString(), etWeight.text.toString())
                 .compose(Transformer.switchSchedulers())
                 .subscribe(object : CommonObserver<Any>() {
                     override fun onError(errorMsg: String) {
@@ -244,8 +283,7 @@ class HomeMarkActivity : BaseActivity() {
                     override fun onSuccess(homeInfo: Any) {
                         cancelLoading()
                         showShort("评价成功~~")
-                        startActivity(Intent(this@HomeMarkActivity,IntelligentDelayActivity::class.java))
-                        finish()
+                        goBack()
                     }
                 })
     }
@@ -258,6 +296,7 @@ class HomeMarkActivity : BaseActivity() {
     }
 
     override fun isSetFondSize(): Boolean {
+
         return false
     }
 
@@ -273,13 +312,13 @@ class HomeMarkActivity : BaseActivity() {
             }
             if (checkedId == rb1.id) {
                 status = 1
-                tv_score.text="5"
+                tv_score.text = "5"
             } else if (checkedId == rb2.id) {
                 status = 2
-                tv_score.text="3"
+                tv_score.text = "3"
             } else {
                 status = 0
-                tv_score.text="1"
+                tv_score.text = "1"
 
             }
         }
@@ -300,14 +339,11 @@ class HomeMarkActivity : BaseActivity() {
         while (i < picFilePathListSize) {
             val filePath = picFilePathList.get(i)
             val iv = ImageView(this)
-            val params = LinearLayout.LayoutParams(40, 40)
-            iv.scaleType = ImageView.ScaleType.FIT_XY
+            val params = LinearLayout.LayoutParams(35, 35)
+            iv.scaleType = ImageView.ScaleType.CENTER_CROP
             iv.layoutParams = params
             picModify.addView(iv)
             val info = ImgInfo()
-            info.url = filePath
-            imgInfos.add(info)
-            Glide.with(this).load(filePath).into(iv)
             info.url = filePath
             imgInfos.add(info)
             Glide.with(this).load(filePath).into(iv)
@@ -318,7 +354,7 @@ class HomeMarkActivity : BaseActivity() {
         }
 
         val iv = ImageView(this)
-        val params = LinearLayout.LayoutParams(40, 40)
+        val params = LinearLayout.LayoutParams(35, 35)
         iv.layoutParams = params
         if (picModify.getChildCount() < 4) {
             picModify.addView(iv)
@@ -352,6 +388,57 @@ class HomeMarkActivity : BaseActivity() {
 
     override fun release() {
 
+        //取消搜索
+        if (bluetoothAdapter != null && bluetoothAdapter!!.isDiscovering) {
+            bluetoothAdapter!!.cancelDiscovery()
+        }
+
+        try {
+            if (listenerThread != null) {
+                listenerThread!!.stop()
+                listenerThread!!.destroy()
+                listenerThread = null
+            }
+            if (connectThread != null) {
+                connectThread!!.stop()
+                connectThread!!.destroy()
+                connectThread = null
+            }
+            if (threadAq != null) {
+                threadAq!!.stop()
+                threadAq!!.destroy()
+                threadAq = null
+            }
+            inputStream.run {
+                close()
+            }
+            copySocket?.run {
+                close()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        /* try {
+            if (connectThread != null) {
+                if (connectThread.inputStream != null) {
+                    connectThread.inputStream.close();
+                    connectThread.inputStream = null;
+                }
+
+                if (connectThread.socket != null) {
+                    connectThread.socket.close();
+                    connectThread.socket=null;
+
+                }
+
+                connectThread.interrupt();
+                connectThread=null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

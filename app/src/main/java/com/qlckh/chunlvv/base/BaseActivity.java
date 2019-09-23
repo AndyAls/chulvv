@@ -46,8 +46,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @BindView(R.id.ib_back)
     protected ImageButton ibBack;
-     @BindView(R.id.title)
-     protected TextView title;
+    @BindView(R.id.title)
+    protected TextView title;
     @BindView(R.id.tv_num)
     protected TextView tvNum;
     @BindView(R.id.ib_right)
@@ -79,13 +79,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         initDate();
         initSlidr();
 
-        XLog.e(TAG,"onCreate");
+        XLog.e(TAG, "onCreate");
 
     }
 
     protected boolean isImmersionBarEnabled() {
         return true;
     }
+
     protected void setStatusBar() {
         immersionBar = ImmersionBar.with(this);
         immersionBar.init();
@@ -95,24 +96,25 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     //<editor-fold desc="滑动退出">
     protected void initSlidr() {
 
-        SlidrConfig config=new SlidrConfig.Builder()
+        SlidrConfig config = new SlidrConfig.Builder()
                 .position(SlidrPosition.LEFT)
                 .edge(true)
                 .edgeSize(0.2f)
                 .build();
-        Slidr.attach(this,config);
+        Slidr.attach(this, config);
     }
     //</editor-fold>
 
     //<editor-fold desc="视图初始化">
     protected abstract int getContentView();
+
     @Override
     public void setContentView(int layoutResID) {
         View view = getLayoutInflater().inflate(R.layout.activity_base, null);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             view.setFitsSystemWindows(true);
         }
-        flContainer=view.findViewById(R.id.fl_container);
+        flContainer = view.findViewById(R.id.fl_container);
         View childView = LayoutInflater.from(this).inflate(layoutResID, null);
         flContainer.addView(childView);
         super.setContentView(view);
@@ -125,13 +127,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         release();
         super.onDestroy();
         unbinder.unbind();
-        if (immersionBar!=null){
+        if (immersionBar != null) {
             immersionBar.destroy();
         }
     }
 //</editor-fold>
 
     //<editor-fold desc="软键盘控制">
+
     /**
      * 分配触摸事件
      */
@@ -188,29 +191,30 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     //<editor-fold desc="基类抽取">
     protected void showShort(String msg) {
 
-        IToast.Config config=new IToast.Builder().setTextSize(25)
+        IToast.Config config = new IToast.Builder().setTextSize(25)
                 .build();
-        IToast.showShort(this, msg,config);
+        IToast.showShort(this, msg, config);
     }
 
     protected void showLong(String msg) {
-        IToast.Config config=new IToast.Builder().setTextSize(25)
+        IToast.Config config = new IToast.Builder().setTextSize(25)
                 .build();
-        IToast.showLong(this, msg,config);
+        IToast.showLong(this, msg, config);
     }
 
-    protected void goBack(){
+    protected void goBack() {
         ibBack.setOnClickListener(v -> finish());
     }
-    protected void setTitle(String msg){
+
+    protected void setTitle(String msg) {
         title.setText(msg);
     }
 
-    protected boolean isEmpty(Object msg){
-        if (msg instanceof String){
-            return TextUtils.isEmpty((String)msg)||"".equals(msg)||"null".equals(msg);
-        }else {
-            return msg==null;
+    protected boolean isEmpty(Object msg) {
+        if (msg instanceof String) {
+            return TextUtils.isEmpty((String) msg) || "".equals(msg) || "null".equals(msg);
+        } else {
+            return msg == null;
         }
 
     }
@@ -221,28 +225,28 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected void attachBaseContext(Context newBase) {
 
         float v = SpUtils.getFloatParam(newBase, TEXT_SIZE, -0.1f);
-        if (v>0.0f){
-            textsize=1.0f+v;
-        }else {
-            textsize=1.0f;
+        if (v > 0.0f) {
+            textsize = 1.0f + v;
+        } else {
+            textsize = 1.0f;
         }
-        if (isSetFondSize()){
-            super.attachBaseContext(ResourceUtils.configWrap(newBase,textsize));
-        }else {
+        if (isSetFondSize()) {
+            super.attachBaseContext(ResourceUtils.configWrap(newBase, textsize));
+        } else {
             super.attachBaseContext(newBase);
         }
 
-        XLog.e(TAG,"attachBaseContext");
+        XLog.e(TAG, "attachBaseContext");
 
     }
 
     protected abstract boolean isSetFondSize();
 
-    protected void loading(){
-        LoadingView.showLoading(mActivity,"",false);
+    protected void loading() {
+        LoadingView.showLoading(mActivity, "", false);
     }
 
-    protected void cancelLoading(){
+    protected void cancelLoading() {
         LoadingView.cancelLoading();
     }
 }

@@ -180,7 +180,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
         listenerThread = new ListenerThread();
         listenerThread.start();
         tvState.setEnabled(false);
-//        searchDevices();
+        searchDevices();
 
     }
 
