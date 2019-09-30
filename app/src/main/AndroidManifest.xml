@@ -69,7 +69,7 @@
             android:process=":remote" />
 
         <activity
-            android:name=".activity.TextActivity"
+            android:name=".qidian.QidianLaunchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/startAppTheme">
             <intent-filter>
@@ -77,11 +77,6 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.lsh.packagelibrary.WebTwoActivity"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true">
         </activity>
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -105,12 +100,6 @@
         <activity
             android:name=".activity.MarkActivity"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lsh.packagelibrary.WebTwoActivity"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true">
-        </activity>
         <activity
             android:name=".activity.AttendanceActivity"
             android:screenOrientation="portrait" />

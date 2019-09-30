@@ -36,7 +36,7 @@ public class DbTest {
         bean.setCategoryScore(10);
         bean.setFullId("1");
         bean.setFullname("李帅");
-        bean.setImgs("imgpath");
+        bean.setImgs(null);
         bean.setFullPhone("1825813");
         bean.setUserId(UserConfig.getUserid());
         bean.setUserName(UserConfig.getUserName());
