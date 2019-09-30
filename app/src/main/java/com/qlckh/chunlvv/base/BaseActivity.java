@@ -67,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getContentView());
         unbinder = ButterKnife.bind(this);
@@ -193,13 +193,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
         IToast.Config config = new IToast.Builder().setTextSize(25)
                 .build();
-        IToast.showShort(this, msg, config);
+        IToast.showShort(getApplicationContext(), msg, config);
     }
 
     protected void showLong(String msg) {
         IToast.Config config = new IToast.Builder().setTextSize(25)
                 .build();
-        IToast.showLong(this, msg, config);
+        IToast.showLong(getApplicationContext(), msg, config);
     }
 
     protected void goBack() {

@@ -14,7 +14,7 @@
         android:textColor="#3d3df4"
         android:gravity="center"
         android:padding="@dimen/dp12"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textStyle="bold"
         android:text="蓝牙连接中...."/>
     <LinearLayout

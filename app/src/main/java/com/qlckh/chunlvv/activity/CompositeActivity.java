@@ -2,6 +2,7 @@ package com.qlckh.chunlvv.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -221,7 +222,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
         tvState.setText("蓝牙连接中....");
         try {
             //创建Socket
-            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(BT_UUID);
+            BluetoothSocket socket = device.createInsecureRfcommSocketToServiceRecord(BT_UUID);
             //启动连接线程
             connectThread = new ConnectThread(socket, true);
             connectThread.start();
@@ -246,7 +247,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
         @Override
         public void run() {
             try {
-                serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, BT_UUID);
+                serverSocket = bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(NAME, BT_UUID);
                 while (true) {
                     //线程阻塞，等待别的设备连接
                     socket = serverSocket.accept();
@@ -322,6 +323,28 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
                     }
                 }
             } catch (Exception e) {
+                release();
+
+                try {
+                    socket.close();
+                    Thread.sleep(1000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        showLong(e.getMessage());
+                        if (listenerThread==null){
+                            listenerThread=new ListenerThread();
+                            listenerThread.start();
+                        }
+                        searchDevices();
+                    }
+                });
+
+
                 e.printStackTrace();
                 if (tvState != null) {
                     tvState.post(new Runnable() {
@@ -345,7 +368,13 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
             return "";
         }
         String[] split = s.split("=");
+        if (split.length<1){
+            return "0";
+        }
         String source = split[0];
+        if (source.length()<1){
+            return "0";
+        }
         String reverse = reverse(source);
         char c = reverse.charAt(0);
         if ("-".equals(reverse.charAt(0) + "")) {
@@ -557,7 +586,7 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
             calibrationWeight = info.getCalibrationWeight();
             host = info.getHost();
             zeroAd = info.getZeroAd();
-            tcpConnect();
+//            tcpConnect();
         }
 
         homeDao = getIntent().getParcelableExtra(MarkActivity.HOME_DAO);
@@ -694,10 +723,11 @@ public class CompositeActivity extends BaseMvpActivity<CompositePresenter> imple
     @Override
     public void onSuccess(CommonDao dao) {
 
-//        mPresenter.addScan(homeDao.getId());
         showShort("提交成功");
-        finish();
-
+        finishAffinity();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        am.restartPackage("com.qlckh.intelligent");
     }
 
     @Override

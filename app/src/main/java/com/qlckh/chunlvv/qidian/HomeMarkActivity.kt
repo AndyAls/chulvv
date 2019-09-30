@@ -1,6 +1,8 @@
 package com.qlckh.chunlvv.qidian
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothServerSocket
@@ -11,6 +13,7 @@ import android.graphics.Rect
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -26,6 +29,7 @@ import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.http.utils.IntentUtil
 import com.qlckh.chunlvv.intelligent.IntelligentDelayActivity
+import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity
 import com.qlckh.chunlvv.intelligent.IntenlligentMarkActivity
 import com.qlckh.chunlvv.preview.ImgInfo
 import com.qlckh.chunlvv.preview.PrePictureActivity
@@ -70,16 +74,17 @@ class HomeMarkActivity : BaseActivity() {
         initlistener()
         setPic()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        listenerThread = ListenerThread()
-        listenerThread!!.start()
         tvState.isEnabled = false
         searchDevices();
+        listenerThread = ListenerThread()
+        listenerThread!!.start()
     }
 
     override fun goBack() {
         val intent = Intent(this, IntelligentDelayActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+        finish()
     }
 
     /**
@@ -94,9 +99,15 @@ class HomeMarkActivity : BaseActivity() {
 
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
     /**
      * 获取已经配对过的设备
      */
+    @SuppressLint("NewApi")
     private fun getBoundedDevices() {
         //获取已经配对过的设备
         val pairedDevices = bluetoothAdapter!!.bondedDevices
@@ -105,7 +116,12 @@ class HomeMarkActivity : BaseActivity() {
             for (device in pairedDevices) {
                 if ("FAYA".equals(device.name, ignoreCase = true)) {
                     bluetoothDevice = device
-                    connectDevice(device)
+                    device.setPairingConfirmation(true)
+                    device.fetchUuidsWithSdp()
+                    thread(true, false, null, "andy") {
+                        connectDevice(device)
+                    }
+
                 }
             }
         }
@@ -115,14 +131,22 @@ class HomeMarkActivity : BaseActivity() {
      * 连接蓝牙设备
      */
     private fun connectDevice(device: BluetoothDevice) {
-        tvState.text = "蓝牙连接中...."
+        tvState?.post {
+            tvState.text = "蓝牙连接中...."
+        }
         try {
             //创建Socket
-            val socket = device.createRfcommSocketToServiceRecord(BT_UUID)
+            val socket = device.createInsecureRfcommSocketToServiceRecord(BT_UUID)
+            copySocket = socket
+
             //启动连接线程
             connectThread = ConnectThread(socket, true)
             connectThread!!.start()
+
         } catch (e: IOException) {
+            runOnUiThread {
+                showLong("connect-->" + e.message)
+            }
             e.printStackTrace()
         }
 
@@ -137,15 +161,16 @@ class HomeMarkActivity : BaseActivity() {
 
         override fun run() {
             try {
-                serverSocket = bluetoothAdapter!!.listenUsingRfcommWithServiceRecord(NAME, BT_UUID)
+                serverSocket = bluetoothAdapter!!.listenUsingInsecureRfcommWithServiceRecord(NAME, BT_UUID)
+                socket = serverSocket!!.accept()
                 while (true) {
                     //线程阻塞，等待别的设备连接
-                    socket = serverSocket!!.accept()
+
                     tvState.post { tvState.text = "蓝牙连接中" }
                     connectThread = ConnectThread(socket!!, false)
                     connectThread!!.start()
                 }
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -165,13 +190,11 @@ class HomeMarkActivity : BaseActivity() {
             try {
                 //如果是自动连接 则调用连接方法
                 if (activeConnect) {
-
 //                    threadAq = thread {
                     socket.connect()
 //                    }
 
                 }
-
                 if (tvState != null) {
                     tvState.post { tvState.text = "蓝牙连接成功" }
                 }
@@ -200,24 +223,44 @@ class HomeMarkActivity : BaseActivity() {
                 }
 
             } catch (e: Exception) {
-                socket.close()
-                try {
-                    val method = socket.remoteDevice!!.javaClass.getMethod("createRfcommSocket", Int.javaClass)
-                    socket = method.invoke(socket.remoteDevice, 1) as BluetoothSocket
-                    socket.connect()
-                    copySocket = socket
-                } catch (e: Exception) {
-                    goBack()
-                }
-                try {
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
 
                 runOnUiThread {
-                    showLong(e.toString())
+                    showLong("recive-->" + e.message)
                 }
+                release()
+                socket.close()
+                copySocket?.close()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this@HomeMarkActivity, HomeMarkActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("homeinfo", homeInfo)
+                    intent.putExtra("ncode", intent.getStringExtra("ncode"))
+                    overridePendingTransition(0, 0)
+                    startActivity(intent)
+                    finishAffinity()
+                    Handler().postDelayed({
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    },20)
+
+                }, 0)
+
+
+                runOnUiThread {
+                    if (listenerThread == null) {
+                        listenerThread = ListenerThread();
+                        listenerThread!!.start();
+                    }
+                    searchDevices();
+                }
+
+                /*   try {
+                       val method = socket.remoteDevice!!.javaClass.getMethod("createRfcommSocket", Int.javaClass)
+                       socket = method.invoke(socket.remoteDevice, 1) as BluetoothSocket
+                       socket.connect()
+                       copySocket = socket
+                   } catch (e: Exception) {
+                       goBack()
+                   }*/
                 e.printStackTrace()
                 if (tvState != null) {
                     tvState.post(Runnable {
@@ -244,9 +287,12 @@ class HomeMarkActivity : BaseActivity() {
         }
         val source = split[0]
         var reverse = reverse(source)
+        if (reverse.length < 1) {
+            return "0"
+        }
         val c = reverse[0]
         if ("-" == reverse[0] + "") {
-            reverse = reverse.substring(1)
+            reverse = if (isEmpty(reverse.substring(1))) "0" else reverse.substring(1)
         }
         return java.lang.Double.parseDouble(reverse).toString()
     }
@@ -283,7 +329,21 @@ class HomeMarkActivity : BaseActivity() {
                     override fun onSuccess(homeInfo: Any) {
                         cancelLoading()
                         showShort("评价成功~~")
-                        goBack()
+                        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
+                        intent?.run {
+                            type = "restart"
+                            action = "restart"
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(this)
+                            finishAffinity()
+                        }
+
+
+                        Handler().postDelayed({
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }, 20)
+
                     }
                 })
     }

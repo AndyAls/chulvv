@@ -33,9 +33,9 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
 
     var i = 0
+    var isStart=false
     override fun method(p0: String?) {
 
-        i += 1
         runOnUiThread {
             tvSource.text = p0 + "=========" + i
         }
@@ -74,7 +74,11 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                             loading()
                             ncode = it
                         }
+                        .doOnError {
+                            cancelLoading()
+                        }
                         .subscribe {
+                            i += 1
                             RxHttpUtils.createApi(ApiService::class.java)
                                     .queryInfo(it)
                                     .compose(Transformer.switchSchedulers())
@@ -82,6 +86,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                                         override fun onError(errorMsg: String?) {
                                             cancelLoading()
                                             showLong(errorMsg)
+                                            startSelf()
                                         }
 
                                         override fun onSuccess(homeInfo: HomeInfo?) {
@@ -91,12 +96,13 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                                                 showLong("获取用户信息失败")
                                                 return
                                             }
-                                            if (homeInfo.status == 1) {
+                                            if (homeInfo.status == 1&&!isStart) {
                                                 val intent = Intent(this@IntenlligentMarkActivity, HomeMarkActivity::class.java)
                                                 intent.putExtra("homeinfo", homeInfo)
                                                 intent.putExtra("ncode", it)
                                                 startActivity(intent)
                                                 finish()
+                                                isStart=true
                                             } else {
                                                 showShort(homeInfo.getMsg())
                                             }
@@ -139,13 +145,28 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         goBack()
         ibRight.visibility = View.VISIBLE
         ibRight.text = "退出登录"
-        ibRight.setOnClickListener { logout() }
+        ibRight.setOnClickListener {
+
+         /*   val intent = Intent(this,IntelligentLuanchActivity::class.java)
+            intent?.run {
+                type="restart"
+                action="restart"
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
+
+            Handler().postDelayed({
+                android.os.Process.killProcess(android.os.Process.myPid());
+            },20)*/
+            logout()
+        }
 
         tvSource.setOnClickListener {
-//                        method("0,0,0,0,0,0080000C1050184-5000B28FC")
-             tvSource1.text = "--" + ReaderController.RecvStr +
- //            +"--\n\n--"+ReaderController.SerialResult
-                     "--\n\n--" + ReaderController.SendResult + "--"
+            //                        method("0,0,0,0,0,0080000C1050184-5000B28FC")
+            tvSource1.text = "--" + ReaderController.RecvStr +
+                    //            +"--\n\n--"+ReaderController.SerialResult
+                    "--\n\n--" + ReaderController.SendResult + "--"
         }
     }
 
@@ -180,8 +201,8 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
     override fun initDate() {
 
         ReaderController = Reader(this)
-        val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
-        tvSource.text=if (aBoolean) "扫描开启成功" else "扫描开启失败"
+        val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS3")
+        tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
         if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
             tvSource.text = "扫描开启失败"
             return
