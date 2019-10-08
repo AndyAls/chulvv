@@ -1,6 +1,6 @@
 <resources>
     <!--分类智能考核-->
-    <string name="app_name">家园系统</string>
+    <string name="app_name">入库</string>
     <item name="item_image_key" type="id" />
 
     <string name="strFontX1">"\u3000"为了加强生活垃圾管理，改善城乡环境，保障公民健康，推动经济社会可持续发展，我镇出台居民生活垃圾分类积分制奖励试行办法，通过建立激励机制，提高居民参与垃圾分类工作的主动性和积极性，引导居民养成垃圾分类的习惯性行为，切实提升我镇生活垃圾处理能力和循环经济水平。</string>
