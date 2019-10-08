@@ -14,6 +14,7 @@ import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.qidian.HomeMarkActivity
 import com.qlckh.chunlvv.user.UserConfig
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -30,14 +31,18 @@ import java.util.concurrent.TimeUnit
  * Desc:
  */
 class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
+    override fun showError(msg: String?) {
+        showLong(msg)
+    }
 
 
     var i = 0
-    var isStart=false
+    var j = 0
+    var isStart = false
     override fun method(p0: String?) {
 
         runOnUiThread {
-            tvSource.text = p0 + "=========" + i
+            tvSource.text = p0 + "=========" + i + "-->" + j + "==>" + (subscribe == null).toString()
         }
 
         var ncode = ""
@@ -46,16 +51,19 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                 initDate()
                 return
             }
-            if (subscribe == null) {
-                subscribe = Observable.just(p0)
-                        .throttleFirst(5, TimeUnit.SECONDS)
+            if (i == 0) {
+//                i+=1
+                subscribe = Flowable.just(p0)
+                        .throttleFirst(2, TimeUnit.SECONDS)
+                        .onBackpressureLatest()
                         .observeOn(AndroidSchedulers.mainThread())
                         .filter {
                             val split = it.split(",")
                             if (split.size < 6) {
-                                subscribe = null
+                                
+                                i = 0
 //                                startSelf()
-                                showLong("识别编码有误,请重试")
+                                showError("识别编码有误,请重试")
                             }
                             split.size > 5
                         }
@@ -65,7 +73,8 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                         .filter {
                             if (it.length != 24) {
 //                                startSelf()
-                                subscribe = null
+                                
+                                i = 0
                                 showLong("解析的编码不正确,请重试")
                             }
                             it.length == 24
@@ -74,35 +83,38 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                             loading()
                             ncode = it
                         }
-                        .doOnError {
-                            cancelLoading()
-                        }
-                        .subscribe {
-                            i += 1
+                       .share()
+                        .subscribe({
                             RxHttpUtils.createApi(ApiService::class.java)
                                     .queryInfo(it)
                                     .compose(Transformer.switchSchedulers())
                                     .subscribe(object : CommonObserver<HomeInfo>() {
                                         override fun onError(errorMsg: String?) {
+                                            compositeDisposable1.clear()
+                                            i = 0
                                             cancelLoading()
                                             showLong(errorMsg)
-                                            startSelf()
+//                                            startSelf()
                                         }
 
                                         override fun onSuccess(homeInfo: HomeInfo?) {
                                             cancelLoading()
-                                            subscribe!!.dispose()
                                             if (homeInfo == null) {
                                                 showLong("获取用户信息失败")
+                                                
+                                                i = 0
                                                 return
                                             }
-                                            if (homeInfo.status == 1&&!isStart) {
-                                                val intent = Intent(this@IntenlligentMarkActivity, HomeMarkActivity::class.java)
-                                                intent.putExtra("homeinfo", homeInfo)
-                                                intent.putExtra("ncode", it)
-                                                startActivity(intent)
-                                                finish()
-                                                isStart=true
+                                            if (homeInfo.status == 1) {
+                                                if (!isStart) {
+                                                    val intent = Intent(this@IntenlligentMarkActivity, HomeMarkActivity::class.java)
+                                                    intent.putExtra("homeinfo", homeInfo)
+                                                    intent.putExtra("ncode", it)
+                                                    startActivity(intent)
+                                                    finish()
+                                                    isStart = true
+                                                }
+
                                             } else {
                                                 showShort(homeInfo.getMsg())
                                             }
@@ -111,9 +123,12 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
                                     })
 
-                        }
+                        }, {
+                            
+                            cancelLoading()
+                        })
                 if (subscribe != null) {
-                    compositeDisposable.add(subscribe!!)
+                    compositeDisposable1.add(subscribe!!)
                 }
             }
             /* else {
@@ -121,7 +136,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                      showLong("请重试")
                  }
                  Handler().postDelayed({
-                     subscribe = null
+                     
                  }, 2000)
              }*/
         } else {
@@ -147,18 +162,18 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         ibRight.text = "退出登录"
         ibRight.setOnClickListener {
 
-         /*   val intent = Intent(this,IntelligentLuanchActivity::class.java)
-            intent?.run {
-                type="restart"
-                action="restart"
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(this)
-            }
+            /*   val intent = Intent(this,IntelligentLuanchActivity::class.java)
+               intent?.run {
+                   type="restart"
+                   action="restart"
+                   addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                   addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                   startActivity(this)
+               }
 
-            Handler().postDelayed({
-                android.os.Process.killProcess(android.os.Process.myPid());
-            },20)*/
+               Handler().postDelayed({
+                   android.os.Process.killProcess(android.os.Process.myPid());
+               },20)*/
             logout()
         }
 
@@ -179,16 +194,13 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         startActivity(intent1)
     }
 
-    override fun showError(msg: String?) {
-
-    }
-
     override fun initSlidr() {
 
     }
 
     lateinit var ReaderController: Reader
     val compositeDisposable = CompositeDisposable()
+    val compositeDisposable1 = CompositeDisposable()
     var subscribe: Disposable? = null
     override fun getContentView(): Int {
         return R.layout.activity_intenlligent_mark
@@ -201,7 +213,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
     override fun initDate() {
 
         ReaderController = Reader(this)
-        val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS3")
+        val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
         tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
         if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
             tvSource.text = "扫描开启失败"
@@ -231,6 +243,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
     override fun release() {
         compositeDisposable.clear()
+        compositeDisposable1.clear()
 //        ReaderController.CloseSerialPort_Android()
     }
 }

@@ -81,9 +81,15 @@ class HomeMarkActivity : BaseActivity() {
     }
 
     override fun goBack() {
-        val intent = Intent(this, IntelligentDelayActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+
+        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
+        intent?.run {
+            type = "restart"
+            action = "restart"
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(this)
+        }
         finish()
     }
 
@@ -172,6 +178,9 @@ class HomeMarkActivity : BaseActivity() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+                runOnUiThread {
+                    showLong(" Listener-->" + e.message)
+                }
             }
 
         }
@@ -224,35 +233,52 @@ class HomeMarkActivity : BaseActivity() {
 
             } catch (e: Exception) {
 
-                runOnUiThread {
-                    showLong("recive-->" + e.message)
-                }
-                release()
-                socket.close()
-                copySocket?.close()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this@HomeMarkActivity, HomeMarkActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("homeinfo", homeInfo)
-                    intent.putExtra("ncode", intent.getStringExtra("ncode"))
-                    overridePendingTransition(0, 0)
-                    startActivity(intent)
-                    finishAffinity()
-                    Handler().postDelayed({
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                    },20)
-
-                }, 0)
-
-
-                runOnUiThread {
-                    if (listenerThread == null) {
-                        listenerThread = ListenerThread();
-                        listenerThread!!.start();
+                try {
+                    runOnUiThread {
+                        showLong("recive-->" + e.message)
                     }
-                    searchDevices();
+                    release()
+                    socket.close()
+                    copySocket?.close()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val intent = Intent(this@HomeMarkActivity, HomeMarkActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.putExtra("homeinfo", homeInfo)
+                        intent.putExtra("ncode", intent.getStringExtra("ncode"))
+                        overridePendingTransition(0, 0)
+                        startActivity(intent)
+                        finishAffinity()
+                        Handler().postDelayed({
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }, 20)
+
+                    }, 0)
+                } catch (e: Exception) {
+
+                    runOnUiThread {
+                        showLong("请检查蓝牙设备")
+
+                        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
+                        intent?.run {
+                            type = "restart"
+                            action = "restart"
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(this)
+                            finish()
+                        }
+                    }
                 }
 
+
+                /* runOnUiThread {
+                     if (listenerThread == null) {
+                         listenerThread = ListenerThread();
+                         listenerThread!!.start();
+                     }
+                     searchDevices();
+                 }
+ */
                 /*   try {
                        val method = socket.remoteDevice!!.javaClass.getMethod("createRfcommSocket", Int.javaClass)
                        socket = method.invoke(socket.remoteDevice, 1) as BluetoothSocket

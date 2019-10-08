@@ -1,11 +1,10 @@
 package com.qlckh.chunlvv;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.widget.ScrollView;
 
 import com.facebook.stetho.Stetho;
-import com.lsh.packagelibrary.CasePackageApp;
 import com.qlckh.chunlvv.api.ApiService;
 import com.qlckh.chunlvv.common.GlideApp;
 import com.qlckh.chunlvv.common.LocationService;
@@ -30,7 +29,7 @@ import uhf.Reader;
  * @date 2018/5/14 11:28
  * Desc:
  */
-public class App extends CasePackageApp {
+public class App extends Application {
 
     private static final String APPKEY = "55a0674a2a";
     private static App app;
