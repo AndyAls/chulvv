@@ -60,7 +60,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                         .filter {
                             val split = it.split(",")
                             if (split.size < 6) {
-                                
+
                                 i = 0
 //                                startSelf()
                                 showError("识别编码有误,请重试")
@@ -73,7 +73,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                         .filter {
                             if (it.length != 24) {
 //                                startSelf()
-                                
+
                                 i = 0
                                 showLong("解析的编码不正确,请重试")
                             }
@@ -83,7 +83,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                             loading()
                             ncode = it
                         }
-                       .share()
+                        .share()
                         .subscribe({
                             RxHttpUtils.createApi(ApiService::class.java)
                                     .queryInfo(it)
@@ -101,7 +101,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                                             cancelLoading()
                                             if (homeInfo == null) {
                                                 showLong("获取用户信息失败")
-                                                
+
                                                 i = 0
                                                 return
                                             }
@@ -124,7 +124,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                                     })
 
                         }, {
-                            
+
                             cancelLoading()
                         })
                 if (subscribe != null) {
@@ -237,7 +237,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         Handler().postDelayed({
             reader.StartMultiEPC(socketState)
         }, 1000)
-        //        tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
+//        tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
         tvSource1.text = reader.RecvStr
     }
 
