@@ -45,6 +45,15 @@ public class UserInfo implements Parcelable {
     private String pingallscore;
     private String pingusercount;
     private String full;
+    private String member;
+
+    public String getMember() {
+        return member;
+    }
+
+    public void setMember(String member) {
+        this.member = member;
+    }
 
     public String getId() {
         return id;
@@ -197,6 +206,7 @@ public class UserInfo implements Parcelable {
         dest.writeString(this.pingallscore);
         dest.writeString(this.pingusercount);
         dest.writeString(this.full);
+        dest.writeString(this.member);
     }
 
     public UserInfo() {
@@ -219,6 +229,7 @@ public class UserInfo implements Parcelable {
         this.pingallscore = in.readString();
         this.pingusercount = in.readString();
         this.full = in.readString();
+        this.member = in.readString();
     }
 
     public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {

@@ -61,9 +61,9 @@ public interface ApiService {
      * 登录接口
      */
     @FormUrlEncoded
-    @POST("index.php/Api/index/login")
+    @POST("api/jqi/rukuser")
     Observable<UseDo> login(@Field("username") String name,
-                            @Field("pwd") String pwd, @Field("status") int type);
+                            @Field("pwd") String pwd);
 
     /**
      * banner图
@@ -400,7 +400,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/jqi/ruk")
-    Observable<StoreDao> putStore(@Field("code") String code, @Field("n_code") String n_code);
+    Observable<StoreDao> putStore(@Field("code") String code, @Field("n_code") String n_code,@Field("id")String id);
 
 
     @FormUrlEncoded

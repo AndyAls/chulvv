@@ -30,19 +30,13 @@ public class QidianLaunchActivity extends BaseActivity {
     @Override
     public void initView() {
         header.setVisibility(View.GONE);
-        //入库
-        if (PhoneUtil.isN5s()){
-            startActivity(new Intent(this,N5ScanActivity.class));
-        }else {
-            startActivity(new Intent(this,PhoneScanActivity.class));
-        }
-        finish();
+
     }
 
     @Override
     public void initDate() {
 
-      /*  //评分
+        //评分
         if (UserConfig.isLogin()) {
             if (UserConfig.getType() == 0) {
                 new Handler().postDelayed(this::toMian,1000);
@@ -51,17 +45,15 @@ public class QidianLaunchActivity extends BaseActivity {
         }else {
             toLogin();
         }
-*/
 
     }
 
     private void toMian() {
-        //家园评分系统
+        //入库
         if (PhoneUtil.isN5s()){
-
-            startActivity(new Intent(this, HomeSysActivity.class));
+            startActivity(new Intent(this,N5ScanActivity.class));
         }else {
-            startActivity(new Intent(this, ScanMarkActivity.class));
+            startActivity(new Intent(this,PhoneScanActivity.class));
         }
         finish();
         overridePendingTransition(0, 0);

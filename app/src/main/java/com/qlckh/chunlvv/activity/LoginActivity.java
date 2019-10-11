@@ -18,6 +18,8 @@ import com.qlckh.chunlvv.dao.HomeDao;
 import com.qlckh.chunlvv.impl.LoginPresenterImpl;
 import com.qlckh.chunlvv.presenter.LoginPresenter;
 import com.qlckh.chunlvv.qidian.HomeSysActivity;
+import com.qlckh.chunlvv.qidian.N5ScanActivity;
+import com.qlckh.chunlvv.qidian.PhoneScanActivity;
 import com.qlckh.chunlvv.user.UseDo;
 import com.qlckh.chunlvv.user.UserConfig;
 import com.qlckh.chunlvv.utils.NetworkUtils;
@@ -162,10 +164,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             UserConfig.savaUserid(info.getData().getId());
             UserConfig.userInfo = info.getData();
             if (userType == 0) {
+                //入库
                 if (PhoneUtil.isN5s()){
-                    startActivity(new Intent(this, HomeSysActivity.class));
+                    startActivity(new Intent(this, N5ScanActivity.class));
                 }else {
-                    startActivity(new Intent(this,ScanMarkActivity.class));
+                    startActivity(new Intent(this, PhoneScanActivity.class));
                 }
                 finish();
                 overridePendingTransition(0, 0);

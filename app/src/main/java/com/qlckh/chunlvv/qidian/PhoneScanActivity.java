@@ -16,6 +16,7 @@ import com.qlckh.chunlvv.base.BaseActivity;
 import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.http.interceptor.Transformer;
 import com.qlckh.chunlvv.http.observer.CommonObserver;
+import com.qlckh.chunlvv.user.UserConfig;
 import com.qlckh.chunlvv.utils.SpUtils;
 
 import butterknife.BindView;
@@ -168,7 +169,7 @@ public class PhoneScanActivity extends BaseActivity {
     private void chooseTong(String json) {
         loading();
         RxHttpUtils.createApi(ApiService.class)
-                .putStore(andy.split("IMEI:")[1], json)
+                .putStore(andy.split("IMEI:")[1], json, UserConfig.getUserid())
                 .compose(Transformer.<StoreDao>switchSchedulers())
                 .subscribe(new CommonObserver<StoreDao>() {
                     @Override

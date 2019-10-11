@@ -12,6 +12,7 @@ import com.qlckh.chunlvv.common.XLog;
 import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.http.interceptor.Transformer;
 import com.qlckh.chunlvv.http.observer.CommonObserver;
+import com.qlckh.chunlvv.user.UserConfig;
 import com.qlckh.chunlvv.utils.SpUtils;
 import com.qlckh.chunlvv.view.HintDialog;
 import com.zltd.industry.ScannerManager;
@@ -82,7 +83,7 @@ public class N5ScanActivity extends BaseScanActivity {
             btHuan.setVisibility(View.GONE);
             return true;
         } else {
-            tvTong.setText(andy);
+            tvTong.setText(andy.split("IMEI:")[1]);
             tvTongHint.setText("请确定桶的编号是否正确");
             btHuan.setVisibility(View.VISIBLE);
             return false;
@@ -144,7 +145,7 @@ public class N5ScanActivity extends BaseScanActivity {
     private void chooseTong(String json) {
         loading();
         RxHttpUtils.createApi(ApiService.class)
-                .putStore(andy, json)
+                .putStore(andy.split("IMEI:")[1], json, UserConfig.getUserid())
                 .compose(Transformer.<StoreDao>switchSchedulers())
                 .subscribe(new CommonObserver<StoreDao>() {
                     @Override

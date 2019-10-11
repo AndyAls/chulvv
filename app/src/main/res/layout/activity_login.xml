@@ -122,6 +122,7 @@
         android:layout_marginTop="@dimen/dp11"
         android:background="@drawable/edit_login_bg"
         android:clickable="true"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp5">

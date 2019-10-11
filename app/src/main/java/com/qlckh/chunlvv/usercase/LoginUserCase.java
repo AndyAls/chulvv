@@ -16,7 +16,7 @@ public class LoginUserCase {
 
     public Observable<UseDo> login(String name, String pwd, int type){
         return RxHttpUtils.createApi(ApiService.class)
-                .login(name, pwd, type)
+                .login(name, pwd)
                 .compose(Transformer.<UseDo>switchSchedulers());
     }
 }

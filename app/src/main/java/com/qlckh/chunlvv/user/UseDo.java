@@ -11,7 +11,7 @@ import android.os.Parcelable;
 public class UseDo implements Parcelable {
     private int status;
     private String msg;
-    private UserInfo row;
+    private UserInfo data;
 
     public int getStatus() {
         return status;
@@ -34,16 +34,16 @@ public class UseDo implements Parcelable {
         return "UseDo{" +
                 "status=" + status +
                 ", msg='" + msg + '\'' +
-                ", info=" + row +
+                ", info=" + data +
                 '}';
     }
 
     public UserInfo getData() {
-        return row;
+        return data;
     }
 
     public void setData(UserInfo data) {
-        this.row = data;
+        this.data = data;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UseDo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.status);
         dest.writeString(this.msg);
-        dest.writeParcelable(this.row, flags);
+        dest.writeParcelable(this.data, flags);
     }
 
     public UseDo() {
@@ -64,7 +64,7 @@ public class UseDo implements Parcelable {
     protected UseDo(Parcel in) {
         this.status = in.readInt();
         this.msg = in.readString();
-        this.row = in.readParcelable(UserInfo.class.getClassLoader());
+        this.data = in.readParcelable(UserInfo.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<UseDo> CREATOR = new Parcelable.Creator<UseDo>() {
