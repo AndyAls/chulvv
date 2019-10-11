@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.qlckh.chunlvv.R;
+import com.qlckh.chunlvv.activity.AttendanceActivity;
 import com.qlckh.chunlvv.activity.LoginActivity;
 import com.qlckh.chunlvv.api.ApiService;
 import com.qlckh.chunlvv.base.BaseScanActivity;
@@ -57,7 +58,6 @@ public class HomeSysActivity extends BaseScanActivity {
                 logout();
             }
         });
-
 
 
         scanMode = mScannerManager.getScanMode();
@@ -135,12 +135,12 @@ public class HomeSysActivity extends BaseScanActivity {
                     @Override
                     protected void onSuccess(HomeInfo homeInfo) {
                         cancelLoading();
-                        if (homeInfo.getStatus()==1){
-                            Intent intent=new Intent(HomeSysActivity.this,HomeMarkActivity.class);
-                            intent.putExtra("homeinfo",homeInfo);
-                            intent.putExtra("ncode",json);
+                        if (homeInfo.getStatus() == 1) {
+                            Intent intent = new Intent(HomeSysActivity.this, HomeMarkActivity.class);
+                            intent.putExtra("homeinfo", homeInfo);
+                            intent.putExtra("ncode", json);
                             startActivity(intent);
-                        }else {
+                        } else {
                             showShort(homeInfo.getMsg());
                         }
 
@@ -148,7 +148,7 @@ public class HomeSysActivity extends BaseScanActivity {
                 });
     }
 
-    @OnClick({R.id.bt_scan,R.id.bt_logout})
+    @OnClick({R.id.bt_scan, R.id.bt_logout, R.id.bt_sign})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_scan:
@@ -157,8 +157,16 @@ public class HomeSysActivity extends BaseScanActivity {
             case R.id.bt_logout:
                 logout();
                 break;
+
+            case R.id.bt_sign:
+                toSign();
+                break;
             default:
         }
+    }
+
+    private void toSign() {
+        startActivity(new Intent(this, AttendanceActivity.class));
     }
 
     private void logout() {

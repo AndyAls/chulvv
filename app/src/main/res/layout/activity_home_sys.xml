@@ -26,7 +26,23 @@
         android:visibility="gone"
         android:textColor="@color/red"
         android:textSize="16sp" />
-
+    <Button
+        android:id="@+id/bt_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_sign"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp60"
+        android:layout_marginRight="@dimen/dp60"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp90"
+        android:text="签到"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10"
+        android:visibility="visible"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
     <Button
         android:id="@+id/bt_scan"
         android:layout_width="match_parent"

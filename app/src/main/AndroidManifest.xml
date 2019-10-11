@@ -53,7 +53,7 @@
         <!--百度定位-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3VsL4d33BVDWwE8llS8K5ghEyPHL2Lzq" />
+            android:value="sXpODdAsGNHs1kZ3udqBzsZ3hHXzg3H9" />
 
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data

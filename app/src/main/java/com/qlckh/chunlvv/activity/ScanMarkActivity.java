@@ -78,7 +78,7 @@ public class ScanMarkActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.bt_scan,R.id.bt_logout})
+    @OnClick({R.id.bt_scan, R.id.bt_logout, R.id.bt_sign})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_scan:
@@ -91,8 +91,15 @@ public class ScanMarkActivity extends BaseActivity {
             case R.id.bt_logout:
                 logout();
                 break;
+            case R.id.bt_sign:
+                toSign();
+                break;
             default:
         }
+    }
+
+    private void toSign() {
+        startActivity(new Intent(this, AttendanceActivity.class));
     }
 
     private void logout() {
@@ -121,7 +128,7 @@ public class ScanMarkActivity extends BaseActivity {
                 .setNeedCrop(true)//从相册选择二维码之后再次截取二维码
                 .setIsOnlyCenter(false)//是否只识别框中内容(默认为全屏识别)
                 .setTitleText("扫描二维码")//设置Tilte文字
-                .setTitleBackgroudColor(ContextCompat.getColor(this,R.color.colorPrimary))//设置状态栏颜色
+                .setTitleBackgroudColor(ContextCompat.getColor(this, R.color.colorPrimary))//设置状态栏颜色
                 .setTitleTextColor(Color.WHITE)//设置Title文字颜色
                 .setShowZoom(false)//是否手动调整焦距
                 .setAutoZoom(false)//是否自动调整焦距
@@ -140,7 +147,7 @@ public class ScanMarkActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data!=null&&resultCode==RESULT_OK&&requestCode==1001){
+        if (data != null && resultCode == RESULT_OK && requestCode == 1001) {
 
             String nCode = data.getStringExtra("andy");
 //            queryData(nCode);
@@ -165,12 +172,12 @@ public class ScanMarkActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(HomeInfo homeInfo) {
                         cancelLoading();
-                        if (homeInfo.getStatus()==1){
-                            Intent intent=new Intent(ScanMarkActivity.this, HomeMarkActivity.class);
-                            intent.putExtra("homeinfo",homeInfo);
-                            intent.putExtra("ncode",json);
+                        if (homeInfo.getStatus() == 1) {
+                            Intent intent = new Intent(ScanMarkActivity.this, HomeMarkActivity.class);
+                            intent.putExtra("homeinfo", homeInfo);
+                            intent.putExtra("ncode", json);
                             startActivity(intent);
-                        }else {
+                        } else {
 
                             showShort(homeInfo.getMsg());
                         }
