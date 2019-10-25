@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="设置界面">
+    <ListPreference android:title="出货设置" android:persistent="true" android:key="PANEL_NODE"/>
+    <ListPreference android:entries="@array/baudrates_name"
+        android:entryValues="@array/baudrates_value"
+        android:key="PANEL_RATE" android:persistent="true" android:title="出货波特率"/>
+
+
+    <ListPreference android:title="称重设置" android:persistent="true" android:key="WEGHT_NODE"/>
+    <ListPreference android:entries="@array/baudrates_name"
+        android:entryValues="@array/baudrates_value"
+        android:key="WEGHT_RATE" android:persistent="true" android:title="称重波特率"/>
+
+    <ListPreference android:title="扫描设置" android:persistent="true" android:key="SCAN_NODE"/>
+    <ListPreference android:entries="@array/baudrates_name"
+        android:entryValues="@array/baudrates_value"
+        android:key="SCAN_RATE" android:persistent="true" android:title="扫描波特率"/>
+
+
+    <ListPreference android:title="打印机设置" android:persistent="true" android:key="PRINT_NODE"/>
+    <ListPreference android:entries="@array/baudrates_name"
+        android:entryValues="@array/baudrates_value"
+        android:key="PRINT_RATE" android:persistent="true" android:title="打印机波特率"/>
+</PreferenceScreen>

@@ -20,8 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_intenlligent_mark.*
-import uhf.MultiLableCallBack
-import uhf.Reader
 import java.util.concurrent.TimeUnit
 
 
@@ -30,7 +28,7 @@ import java.util.concurrent.TimeUnit
  * @date   2019/9/9 16:30
  * Desc:
  */
-class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
+class IntenlligentMarkActivity : BaseActivity(){
     override fun showError(msg: String?) {
         showLong(msg)
     }
@@ -39,7 +37,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
     var i = 0
     var j = 0
     var isStart = false
-    override fun method(p0: String?) {
+    /*override fun method(p0: String?) {
 
         runOnUiThread {
             tvSource.text = p0 + "=========" + i + "-->" + j + "==>" + (subscribe == null).toString()
@@ -131,14 +129,14 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                     compositeDisposable1.add(subscribe!!)
                 }
             }
-            /* else {
+            *//* else {
                  runOnUiThread {
                      showLong("请重试")
                  }
                  Handler().postDelayed({
                      
                  }, 2000)
-             }*/
+             }*//*
         } else {
             runOnUiThread {
                 tvSource.text = "没有接收到数据"
@@ -147,7 +145,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
 
     }
-
+*/
     fun startSelf() {
         startActivity(Intent(this, IntenlligentMarkActivity::class.java))
         finish()
@@ -179,9 +177,9 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
         tvSource.setOnClickListener {
             //                        method("0,0,0,0,0,0080000C1050184-5000B28FC")
-            tvSource1.text = "--" + ReaderController.RecvStr +
+           /* tvSource1.text = "--" + ReaderController.RecvStr +
                     //            +"--\n\n--"+ReaderController.SerialResult
-                    "--\n\n--" + ReaderController.SendResult + "--"
+                    "--\n\n--" + ReaderController.SendResult + "--"*/
         }
     }
 
@@ -198,7 +196,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
     }
 
-    lateinit var ReaderController: Reader
+//    lateinit var ReaderController: Reader
     val compositeDisposable = CompositeDisposable()
     val compositeDisposable1 = CompositeDisposable()
     var subscribe: Disposable? = null
@@ -212,7 +210,7 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
 
     override fun initDate() {
 
-        ReaderController = Reader(this)
+      /*  ReaderController = Reader(this)
         val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
         tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
         if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
@@ -225,12 +223,12 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         val subscribe1 = Observable.interval(1, 1, TimeUnit.SECONDS).subscribe {
             ReaderController.StartMultiEPC(socketState)
         }
-        compositeDisposable.add(subscribe1)
+        compositeDisposable.add(subscribe1)*/
 
 
     }
 
-    private fun readSocket() {
+  /*  private fun readSocket() {
         val app = application as App
         val reader = app.getReader(this)
         val socketState = app.socketState
@@ -239,14 +237,14 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
         }, 1000)
 //        tvSource.text = if (aBoolean) "扫描开启成功" else "扫描开启失败"
         tvSource1.text = reader.RecvStr
-    }
+    }*/
 
     override fun release() {
         compositeDisposable.clear()
         compositeDisposable1.clear()
         RxHttpUtils.cancelAllRequest()
         isStart=true
-        ReaderController.CloseSerialPort_Android()
+//        ReaderController.CloseSerialPort_Android()
 //        ReaderController.CloseSerialPort_Android()
     }
 }

@@ -27,7 +27,6 @@ import com.qlckh.chunlvv.usercase.ScanEvent;
 import com.qlckh.chunlvv.utils.JsonUtil;
 import com.qlckh.chunlvv.utils.SpUtils;
 import com.qlckh.chunlvv.view.HintDialog;
-import com.zltd.industry.ScannerManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

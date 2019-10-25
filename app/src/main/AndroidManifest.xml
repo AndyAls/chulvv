@@ -77,7 +77,7 @@
             android:process=":remote" />
 
         <activity
-            android:name=".intelligent.IntelligentLuanchActivity"
+            android:name=".carpaly.TestActivity"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
             android:exported="true"
@@ -228,6 +228,8 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".intelligent.IntelligentDelayActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".carpaly.SendHexActivity" />
+        <activity android:name=".carpaly.SettingPortActivity" />
 
 
         <!-- FileProvider配置访问路径，适配7.0及其以上 -->
