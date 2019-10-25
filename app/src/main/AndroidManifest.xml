@@ -221,6 +221,7 @@
         <activity android:name=".qidian.PhoneScanActivity" />
         <activity android:name=".qidian.HomeSysActivity" />
         <activity android:name=".qidian.HomeMarkActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="landscape"/>
         <activity android:name=".activity.ScanMarkActivity" />
         <activity android:name=".intelligent.IntenlligentMarkActivity"

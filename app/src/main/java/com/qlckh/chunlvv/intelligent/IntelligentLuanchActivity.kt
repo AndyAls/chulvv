@@ -49,14 +49,18 @@ class IntelligentLuanchActivity : BaseActivity() {
             finish()
             overridePendingTransition(0, 0)
         }else{
-            //评分
-            if (UserConfig.isLogin()) {
-                if (UserConfig.getType() == 0) {
-                    Handler().postDelayed({ this.toMian() }, 1000)
+
+            Handler().postDelayed({
+                if (UserConfig.isLogin()) {
+                    if (UserConfig.getType() == 0) {
+                        Handler().postDelayed({ this.toMian() }, 1000)
+                    }
+                } else {
+                    toLogin()
                 }
-            } else {
-                toLogin()
-            }
+            },1000)
+            //评分
+
         }
 
     }

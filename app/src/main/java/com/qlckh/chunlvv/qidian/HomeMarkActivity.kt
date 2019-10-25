@@ -2,7 +2,6 @@ package com.qlckh.chunlvv.qidian
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothServerSocket
@@ -14,6 +13,7 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.Process
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -28,22 +28,18 @@ import com.qlckh.chunlvv.http.RxHttpUtils
 import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.http.utils.IntentUtil
-import com.qlckh.chunlvv.intelligent.IntelligentDelayActivity
 import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity
-import com.qlckh.chunlvv.intelligent.IntenlligentMarkActivity
 import com.qlckh.chunlvv.preview.ImgInfo
 import com.qlckh.chunlvv.preview.PrePictureActivity
 import com.qlckh.chunlvv.user.UserConfig
 import com.qlckh.chunlvv.utils.Base64Util
 import com.qlckh.chunlvv.utils.ImgUtil
 import kotlinx.android.synthetic.main.activity_home_mark.*
-import kotlinx.android.synthetic.main.choose_dialog_cotent.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.ref.WeakReference
-import java.net.Socket
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -68,6 +64,7 @@ class HomeMarkActivity : BaseActivity() {
     private val BUFFER_SIZE = 1024
     var threadAq: Thread? = null
     override fun initView() {
+
         setTitle("易腐垃圾")
         ibRight.visibility = View.VISIBLE
         ibRight.setText("提交评价")
@@ -86,7 +83,7 @@ class HomeMarkActivity : BaseActivity() {
         intent?.run {
             type = "restart"
             action = "restart"
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
@@ -122,12 +119,7 @@ class HomeMarkActivity : BaseActivity() {
             for (device in pairedDevices) {
                 if ("FAYA".equals(device.name, ignoreCase = true)) {
                     bluetoothDevice = device
-                    device.setPairingConfirmation(true)
-                    device.fetchUuidsWithSdp()
-                    thread(true, false, null, "andy") {
-                        connectDevice(device)
-                    }
-
+                    connectDevice(device)
                 }
             }
         }
@@ -176,7 +168,10 @@ class HomeMarkActivity : BaseActivity() {
                     connectThread = ConnectThread(socket!!, false)
                     connectThread!!.start()
                 }
+            } catch (err: OutOfMemoryError) {
+                System.gc()
             } catch (e: Exception) {
+
                 e.printStackTrace()
                 runOnUiThread {
                     showLong(" Listener-->" + e.message)
@@ -241,16 +236,7 @@ class HomeMarkActivity : BaseActivity() {
                     socket.close()
                     copySocket?.close()
                     Handler(Looper.getMainLooper()).postDelayed({
-                        val intent = Intent(this@HomeMarkActivity, HomeMarkActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        intent.putExtra("homeinfo", homeInfo)
-                        intent.putExtra("ncode", intent.getStringExtra("ncode"))
-                        overridePendingTransition(0, 0)
-                        startActivity(intent)
-                        finishAffinity()
-                        Handler().postDelayed({
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                        }, 20)
+                        restartSelf()
 
                     }, 0)
                 } catch (e: Exception) {
@@ -262,7 +248,7 @@ class HomeMarkActivity : BaseActivity() {
                         intent?.run {
                             type = "restart"
                             action = "restart"
-                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(this)
                             finish()
@@ -303,17 +289,31 @@ class HomeMarkActivity : BaseActivity() {
         }
     }
 
+    private fun restartSelf() {
+        val intent = Intent(this@HomeMarkActivity, HomeMarkActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("homeinfo", homeInfo)
+        intent.putExtra("ncode", intent.getStringExtra("ncode"))
+        overridePendingTransition(0, 0)
+        startActivity(intent)
+        finishAffinity()
+        Handler().postDelayed({
+            Process.killProcess(Process.myPid());
+        }, 50)
+    }
+
     private fun getWeight(s: String): String {
         if (isEmpty(s)) {
             return ""
         }
         val split = s.split("=".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        if (split.size < 1) {
+        if (split.isEmpty()) {
             return "0"
         }
         val source = split[0]
         var reverse = reverse(source)
-        if (reverse.length < 1) {
+        if (reverse.isEmpty()) {
             return "0"
         }
         val c = reverse[0]
@@ -356,19 +356,19 @@ class HomeMarkActivity : BaseActivity() {
                         cancelLoading()
                         showShort("评价成功~~")
                         val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
-                        intent?.run {
+                        intent.run {
                             type = "restart"
                             action = "restart"
-                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(this)
-                            finishAffinity()
+                            finish()
                         }
 
 
                         Handler().postDelayed({
                             android.os.Process.killProcess(android.os.Process.myPid());
-                        }, 20)
+                        }, 50)
 
                     }
                 })
@@ -389,8 +389,10 @@ class HomeMarkActivity : BaseActivity() {
     override fun initDate() {
 
         homeInfo = intent.getParcelableExtra<HomeInfo>("homeinfo")
-        tvName.text = homeInfo!!.data.fullname
-        tvAddress.text = homeInfo!!.data.company
+        if (homeInfo != null) {
+            tvName.text = homeInfo!!.data.fullname
+            tvAddress.text = homeInfo!!.data.company
+        }
         rg.setOnCheckedChangeListener { group, checkedId ->
             val findViewById = group.findViewById<RadioButton>(checkedId)
             if (!findViewById.isPressed) {

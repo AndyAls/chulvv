@@ -183,6 +183,7 @@
                 android:layout_marginLeft="@dimen/dp5"
                 android:background="@drawable/bg_editext_default"
                 android:enabled="false"
+                android:clickable="false"
                 android:hint="0"
                 android:paddingLeft="@dimen/dp35"
                 android:paddingTop="@dimen/dp3"

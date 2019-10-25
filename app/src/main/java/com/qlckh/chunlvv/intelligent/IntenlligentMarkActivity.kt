@@ -95,13 +95,13 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
                                             cancelLoading()
                                             showLong(errorMsg)
 //                                            startSelf()
+                                            isStart=false
                                         }
 
                                         override fun onSuccess(homeInfo: HomeInfo?) {
                                             cancelLoading()
                                             if (homeInfo == null) {
                                                 showLong("获取用户信息失败")
-
                                                 i = 0
                                                 return
                                             }
@@ -244,6 +244,9 @@ class IntenlligentMarkActivity : BaseActivity(), MultiLableCallBack {
     override fun release() {
         compositeDisposable.clear()
         compositeDisposable1.clear()
+        RxHttpUtils.cancelAllRequest()
+        isStart=true
+        ReaderController.CloseSerialPort_Android()
 //        ReaderController.CloseSerialPort_Android()
     }
 }

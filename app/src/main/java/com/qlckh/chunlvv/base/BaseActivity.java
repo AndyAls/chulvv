@@ -188,6 +188,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
     //</editor-fold>
 
+
     //<editor-fold desc="基类抽取">
     protected void showShort(String msg) {
 

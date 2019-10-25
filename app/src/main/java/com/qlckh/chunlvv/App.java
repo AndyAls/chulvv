@@ -131,9 +131,9 @@ public class App extends Application {
                 //全局超时配置
                 .setReadTimeout(ApiService.DEFAULT_TIME)
                 //全局超时配置
-                .setWriteTimeout(10)
+                .setWriteTimeout(ApiService.DEFAULT_TIME)
                 //全局超时配置
-                .setConnectTimeout(10)
+                .setConnectTimeout(ApiService.DEFAULT_TIME)
                 //全局是否打开请求log日志
                 .setLog(true);
     }

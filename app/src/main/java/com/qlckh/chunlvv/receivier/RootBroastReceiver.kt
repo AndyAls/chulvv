@@ -16,8 +16,11 @@ class RootBroastReceiver :BroadcastReceiver(){
         if (Intent.ACTION_BOOT_COMPLETED==intent!!.action){
             val startIntent = Intent(context, IntelligentLuanchActivity::class.java).apply {
                 action = "android.intent.action.MAIN"
+                type="rootStart"
                 addCategory(Intent.CATEGORY_LAUNCHER)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
             }
             context!!.startActivity(startIntent)
         }
