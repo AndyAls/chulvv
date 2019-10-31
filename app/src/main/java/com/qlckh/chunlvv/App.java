@@ -22,6 +22,7 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.security.InvalidParameterException;
 
 import android_serialport_api.SerialPort;
@@ -40,8 +41,6 @@ public class App extends Application {
     private static final String APPKEY = "55a0674a2a";
     private static App app;
     public LocationService locationService;
-    private Reader reader;
-    private AsyncSocketState socketState;
 
     public SerialPortFinder mSerialPortFinder = new SerialPortFinder();
     private SerialPort mSerialPort = null;
@@ -89,35 +88,6 @@ public class App extends Application {
         initHttp();
     }
 
-    /**
-     *
-     ReaderController = Reader(this)
-     val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
-     if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
-     tvSource.text = "扫描开启失败"
-     return
-     }
-     val socketState = ReaderController.GetClientInfo()[0]
-     ReaderController.SetPower(socketState, 0x12.toByte(), 0x12.toByte())
-     * @return  MultiLableCallBack
-     */
-    public Reader getReader(MultiLableCallBack callBack){
-        if (reader==null){
-            reader = new Reader(callBack);
-            reader.OpenSerialPort_Android("/dev/ttyS1");
-            if (reader.GetClientInfo() == null || reader.GetClientInfo().size() < 1) {
-                return null;
-            }
-            socketState = reader.GetClientInfo().get(0);
-//            reader.SetPower(socketState,(byte) 0xc,(byte) 0xc);
-        }
-        return reader;
-
-    }
-
-    public AsyncSocketState getSocketState(){
-        return socketState;
-    }
     private void initHttp() {
         /**
          * 全局请求的统一配置
@@ -180,8 +150,11 @@ public class App extends Application {
         if (mWeightManager == null) {
             mWeightManager = new SerialPortManager();
             SharedPreferences sp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
-            String weightNode = sp.getString(Constant.WEGHT_NODE, "");
-            int weightRate = Integer.decode(sp.getString(Constant.WEGHT_RATE, "-1"));
+//            String weightNode = sp.getString(Constant.WEGHT_NODE, "");
+//            int weightRate = Integer.decode(sp.getString(Constant.WEGHT_RATE, "-1"));
+
+            String weightNode = "/dev/ttyS3";
+            int weightRate = 9600;
             mWeightManager.openSerialPort(new File(weightNode), weightRate);
 
         }
@@ -192,11 +165,11 @@ public class App extends Application {
         if (mScanManager == null) {
             mScanManager = new SerialPortManager();
             SharedPreferences ssp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
-            String scanNode = ssp.getString(Constant.SCAN_NODE, "");
-            int scanRate = Integer.decode(ssp.getString(Constant.SCAN_RATE, "-1"));
-//            String scanNode ="/dev/ttyO4";
-//            //9600
-//            int scanRate = 9600;
+//            String scanNode = ssp.getString(Constant.SCAN_NODE, "");
+//            int scanRate = Integer.decode(ssp.getString(Constant.SCAN_RATE, "-1"));
+            String scanNode ="/dev/ttyS1";
+            //9600
+            int scanRate = 9600;
             mScanManager.openSerialPort(new File(scanNode), scanRate);
         }
         return mScanManager;

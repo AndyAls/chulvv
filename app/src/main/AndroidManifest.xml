@@ -77,9 +77,8 @@
             android:process=":remote" />
 
         <activity
-            android:name=".carpaly.TestActivity"
+            android:name=".intelligent.IntelligentLuanchActivity"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask"
             android:exported="true"
             android:enabled="true"
             android:theme="@style/startAppTheme">

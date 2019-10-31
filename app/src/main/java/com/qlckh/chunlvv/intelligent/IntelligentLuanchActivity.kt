@@ -6,6 +6,7 @@ import android.view.View
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.activity.LoginActivity
 import com.qlckh.chunlvv.base.BaseActivity
+import com.qlckh.chunlvv.carpaly.ConvertUtils
 import com.qlckh.chunlvv.common.XLog
 import com.qlckh.chunlvv.user.UserConfig
 
@@ -44,8 +45,9 @@ class IntelligentLuanchActivity : BaseActivity() {
     }
 
     override fun initDate() {
+        mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
         if (intent.action=="restart"||intent.type=="restart"){
-            startActivity(Intent(this, IntelligentDelayActivity::class.java))
+            startActivity(Intent(this, IntenlligentMarkActivity::class.java))
             finish()
             overridePendingTransition(0, 0)
         }else{
