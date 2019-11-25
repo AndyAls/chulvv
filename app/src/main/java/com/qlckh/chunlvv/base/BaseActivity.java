@@ -21,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.qlckh.chunlvv.App;
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.common.IToast;
 import com.qlckh.chunlvv.common.XLog;
+import com.qlckh.chunlvv.manager.SerialPortManager;
 import com.qlckh.chunlvv.utils.ResourceUtils;
 import com.qlckh.chunlvv.utils.SpUtils;
 import com.qlckh.chunlvv.view.LoadingView;
@@ -60,6 +62,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected float textsize;
     public static final String TEXT_SIZE = "TEXT_SIZE";
     protected ImmersionBar immersionBar;
+    protected App mApplication;
+    protected SerialPortManager mWeightManager;
+    protected SerialPortManager mScanManager;
+    protected SerialPortManager mPrintManager;
+    protected SerialPortManager mPanelManager;
+
 
     //</editor-fold>
 
@@ -72,6 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         setContentView(getContentView());
         unbinder = ButterKnife.bind(this);
         mActivity = this;
+        mApplication = (App) getApplication();
+        getSerialPort();
         if (isImmersionBarEnabled()) {
             setStatusBar();
         }
@@ -83,6 +93,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     }
 
+
+    private void getSerialPort() {
+        mPanelManager=mApplication.getmPanelManager();
+        mPrintManager=mApplication.getmPrintManager();
+        mScanManager=mApplication.getmScanManager();
+        mWeightManager=mApplication.getmWeightManager();
+    }
     protected boolean isImmersionBarEnabled() {
         return true;
     }

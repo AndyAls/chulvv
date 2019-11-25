@@ -9,11 +9,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.os.Process
+import android.os.*
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -22,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.api.ApiService
 import com.qlckh.chunlvv.base.BaseActivity
+import com.qlckh.chunlvv.carpaly.ConvertUtils
 import com.qlckh.chunlvv.common.XLog
 import com.qlckh.chunlvv.dao.HomeInfo
 import com.qlckh.chunlvv.http.RxHttpUtils
@@ -29,6 +26,8 @@ import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.http.utils.IntentUtil
 import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity
+import com.qlckh.chunlvv.intelligent.IntenlligentMarkActivity
+import com.qlckh.chunlvv.manager.OnSerialPortDataListener
 import com.qlckh.chunlvv.preview.ImgInfo
 import com.qlckh.chunlvv.preview.PrePictureActivity
 import com.qlckh.chunlvv.user.UserConfig
@@ -40,6 +39,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.ref.WeakReference
+import java.math.BigDecimal
+import java.math.MathContext
 import java.util.*
 import kotlin.concurrent.thread
 
@@ -66,28 +67,14 @@ class HomeMarkActivity : BaseActivity() {
     override fun initView() {
 
         setTitle("易腐垃圾")
-        ibRight.visibility = View.VISIBLE
+        ibRight.visibility = View.GONE
         ibRight.setText("提交评价")
         initlistener()
         setPic()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        tvState.isEnabled = false
-        searchDevices();
+//        searchDevices();
         listenerThread = ListenerThread()
-        listenerThread!!.start()
-    }
-
-    override fun goBack() {
-
-        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
-        intent?.run {
-            type = "restart"
-            action = "restart"
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
-        }
-        finish()
+//        listenerThread!!.start()
     }
 
     /**
@@ -129,9 +116,6 @@ class HomeMarkActivity : BaseActivity() {
      * 连接蓝牙设备
      */
     private fun connectDevice(device: BluetoothDevice) {
-        tvState?.post {
-            tvState.text = "蓝牙连接中...."
-        }
         try {
             //创建Socket
             val socket = device.createInsecureRfcommSocketToServiceRecord(BT_UUID)
@@ -139,7 +123,7 @@ class HomeMarkActivity : BaseActivity() {
 
             //启动连接线程
             connectThread = ConnectThread(socket, true)
-            connectThread!!.start()
+//            connectThread!!.start()
 
         } catch (e: IOException) {
             runOnUiThread {
@@ -164,9 +148,8 @@ class HomeMarkActivity : BaseActivity() {
                 while (true) {
                     //线程阻塞，等待别的设备连接
 
-                    tvState.post { tvState.text = "蓝牙连接中" }
                     connectThread = ConnectThread(socket!!, false)
-                    connectThread!!.start()
+//                    connectThread!!.start()
                 }
             } catch (err: OutOfMemoryError) {
                 System.gc()
@@ -199,9 +182,6 @@ class HomeMarkActivity : BaseActivity() {
 //                    }
 
                 }
-                if (tvState != null) {
-                    tvState.post { tvState.text = "蓝牙连接成功" }
-                }
 
                 inputStream = socket.inputStream
                 //                outputStream = socket.getOutputStream();
@@ -217,8 +197,8 @@ class HomeMarkActivity : BaseActivity() {
                         if (etWeight != null) {
                             etWeight.post {
                                 if (etWeight != null) {
-                                    etWeight.setText(getWeight(String(data)))
-                                    etWeight.isEnabled = false
+//                                    etWeight.setText(getWeight(String(data)))
+//                                    etWeight.isEnabled = false
                                 }
                             }
                         }
@@ -236,23 +216,13 @@ class HomeMarkActivity : BaseActivity() {
                     socket.close()
                     copySocket?.close()
                     Handler(Looper.getMainLooper()).postDelayed({
-                        restartSelf()
+                        //                        restartSelf()
 
                     }, 0)
                 } catch (e: Exception) {
 
                     runOnUiThread {
                         showLong("请检查蓝牙设备")
-
-                        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
-                        intent?.run {
-                            type = "restart"
-                            action = "restart"
-                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(this)
-                            finish()
-                        }
                     }
                 }
 
@@ -274,15 +244,6 @@ class HomeMarkActivity : BaseActivity() {
                        goBack()
                    }*/
                 e.printStackTrace()
-                if (tvState != null) {
-                    tvState.post(Runnable {
-                        if (tvState == null) {
-                            return@Runnable
-                        }
-                        tvState.isEnabled = true
-                        tvState.text = "蓝牙连接失败,请点击重试..."
-                    })
-                }
 
             }
 
@@ -329,15 +290,15 @@ class HomeMarkActivity : BaseActivity() {
 
     private fun initlistener() {
 
-        ibRight.setOnClickListener {
+        submit.setOnClickListener {
             if (isDone) {
                 postData()
             } else {
                 showShort("等待图片上传,请稍后重试")
             }
         }
-        tvState.setOnClickListener {
-            connectDevice(bluetoothDevice!!);
+        button.setOnClickListener {
+            mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
         }
     }
 
@@ -355,20 +316,9 @@ class HomeMarkActivity : BaseActivity() {
                     override fun onSuccess(homeInfo: Any) {
                         cancelLoading()
                         showShort("评价成功~~")
-                        val intent = Intent(this@HomeMarkActivity, IntelligentLuanchActivity::class.java)
-                        intent.run {
-                            type = "restart"
-                            action = "restart"
-                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(this)
-                            finish()
-                        }
-
-
-                        Handler().postDelayed({
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                        }, 50)
+                        val intent = Intent(this@HomeMarkActivity, IntenlligentMarkActivity::class.java)
+                        startActivity(intent)
+                        finish()
 
                     }
                 })
@@ -410,6 +360,80 @@ class HomeMarkActivity : BaseActivity() {
 
             }
         }
+        setWeightListener()
+    }
+
+    private fun setWeightListener() {
+
+        mWeightManager.setOnSerialPortDataListener(object : OnSerialPortDataListener {
+            override fun onDataReceived(bytes: ByteArray?) {
+
+                val message = Message()
+                message.what = WEIGHT_WHAT
+                message.obj = bytes
+                mHandler.sendMessageDelayed(message, 500)
+
+            }
+
+            override fun onDataSent(bytes: ByteArray?) {
+
+            }
+
+        })
+    }
+
+    private val WEIGHT_WHAT = 10009
+    private val mHandler = Handler(Handler.Callback { msg ->
+        val what = msg.what
+        when (what) {
+
+            WEIGHT_WHAT -> {
+                handWeight(msg.obj as ByteArray)
+            }
+
+        }
+        false
+    })
+    internal var buffer = StringBuffer()
+    private fun handWeight(bytes: ByteArray) {
+        buffer.append(ConvertUtils.bytes2HexString(bytes))
+        if (!buffer.toString().startsWith("55")) {
+            buffer.delete(0, buffer.length)
+            return
+        }
+        if (buffer.length == 18) {
+            tvState.text = buffer.toString()
+            if (getMeight(buffer.toString()).toDouble() > 100) {
+                mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
+                etWeight.setText("0")
+            } else {
+                if (etWeight != null) {
+                    etWeight.setText(getMeight(buffer.toString()))
+                    etWeight.isEnabled = false
+                }
+            }
+            buffer.delete(0, buffer.length)
+        }
+    }
+
+    private fun getMeight(str: String): String {
+
+        val sequence = str.subSequence(10, 14).toString()
+        val weight = sequence.toLong(16)
+
+        tvState1.text = sequence + "  -->  " + weight
+
+        return div(weight.toDouble(), 100.toDouble(), 10).toString()
+    }
+
+    fun div(d1: Double, d2: Double, scale: Int): Double {
+        if (scale < 0) {
+            throw IllegalArgumentException("The scale must be a positive integer or zero")
+        }
+        val b1 = BigDecimal(java.lang.Double.toString(d1))
+        val b2 = BigDecimal(java.lang.Double.toString(d2))
+        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).toDouble()
+
     }
 
     internal var imgInfos = ArrayList<ImgInfo>()

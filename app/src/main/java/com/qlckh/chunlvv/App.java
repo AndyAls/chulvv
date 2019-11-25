@@ -2,6 +2,7 @@ package com.qlckh.chunlvv;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
@@ -11,18 +12,24 @@ import com.qlckh.chunlvv.common.LocationService;
 import com.qlckh.chunlvv.common.XLog;
 import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity;
+import com.qlckh.chunlvv.manager.Constant;
+import com.qlckh.chunlvv.manager.SerialPortManager;
 import com.qlckh.chunlvv.preview.GlideLoader;
 import com.qlckh.chunlvv.preview.ZoomMediaLoader;
 import com.qlckh.chunlvv.user.UserConfig;
 import com.tencent.bugly.Bugly;
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.security.InvalidParameterException;
+
+import android_serialport_api.SerialPort;
+import android_serialport_api.SerialPortFinder;
 import butterknife.ButterKnife;
 import cat.ereza.customactivityoncrash.activity.DefaultErrorActivity;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
-import uhf.AsyncSocketState;
-import uhf.MultiLableCallBack;
-import uhf.Reader;
 
 /**
  * @author Andy
@@ -34,8 +41,15 @@ public class App extends Application {
     private static final String APPKEY = "55a0674a2a";
     private static App app;
     public LocationService locationService;
-    private Reader reader;
-    private AsyncSocketState socketState;
+
+    public SerialPortFinder mSerialPortFinder = new SerialPortFinder();
+    private SerialPort mSerialPort = null;
+
+    private SerialPortManager mWeightManager = null;
+    private SerialPortManager mScanManager = null;
+    private SerialPortManager mPrintManager = null;
+    private SerialPortManager mPanelManager = null;
+
 
     @Override
     public void onCreate() {
@@ -74,35 +88,6 @@ public class App extends Application {
         initHttp();
     }
 
-    /**
-     *
-     ReaderController = Reader(this)
-     val aBoolean = ReaderController.OpenSerialPort_Android("/dev/ttyS1")
-     if (ReaderController.GetClientInfo() == null || ReaderController.GetClientInfo().size < 1) {
-     tvSource.text = "扫描开启失败"
-     return
-     }
-     val socketState = ReaderController.GetClientInfo()[0]
-     ReaderController.SetPower(socketState, 0x12.toByte(), 0x12.toByte())
-     * @return  MultiLableCallBack
-     */
-    public Reader getReader(MultiLableCallBack callBack){
-        if (reader==null){
-            reader = new Reader(callBack);
-            reader.OpenSerialPort_Android("/dev/ttyS1");
-            if (reader.GetClientInfo() == null || reader.GetClientInfo().size() < 1) {
-                return null;
-            }
-            socketState = reader.GetClientInfo().get(0);
-//            reader.SetPower(socketState,(byte) 0xc,(byte) 0xc);
-        }
-        return reader;
-
-    }
-
-    public AsyncSocketState getSocketState(){
-        return socketState;
-    }
     private void initHttp() {
         /**
          * 全局请求的统一配置
@@ -159,6 +144,107 @@ public class App extends Application {
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         GlideApp.get(this).onTrimMemory(level);
+    }
+
+    public SerialPortManager getmWeightManager() {
+        if (mWeightManager == null) {
+            mWeightManager = new SerialPortManager();
+            SharedPreferences sp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+//            String weightNode = sp.getString(Constant.WEGHT_NODE, "");
+//            int weightRate = Integer.decode(sp.getString(Constant.WEGHT_RATE, "-1"));
+
+            String weightNode = "/dev/ttyS3";
+            int weightRate = 9600;
+            mWeightManager.openSerialPort(new File(weightNode), weightRate);
+
+        }
+        return mWeightManager;
+    }
+
+    public SerialPortManager getmScanManager() {
+        if (mScanManager == null) {
+            mScanManager = new SerialPortManager();
+            SharedPreferences ssp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+//            String scanNode = ssp.getString(Constant.SCAN_NODE, "");
+//            int scanRate = Integer.decode(ssp.getString(Constant.SCAN_RATE, "-1"));
+            String scanNode ="/dev/ttyS1";
+            //9600
+            int scanRate = 9600;
+            mScanManager.openSerialPort(new File(scanNode), scanRate);
+        }
+        return mScanManager;
+    }
+
+    public SerialPortManager getmPrintManager() {
+        if (mPrintManager == null) {
+            mPrintManager = new SerialPortManager();
+
+            SharedPreferences prsp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+            String printNode = prsp.getString(Constant.PRINT_NODE, "");
+            int printRate = Integer.decode(prsp.getString(Constant.PRINT_RATE, "-1"));
+            mPrintManager.openSerialPort(new File(printNode), printRate);
+        }
+        return mPrintManager;
+    }
+
+    public SerialPortManager getmPanelManager() {
+        if (mPanelManager == null) {
+            mPanelManager = new SerialPortManager();
+            SharedPreferences psp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+            String panelNode = psp.getString(Constant.PANEL_NODE, "");
+            int panelRate = Integer.decode(psp.getString(Constant.PRINT_RATE, "-1"));
+//            String panelNode ="/dev/ttyO3";
+//            int panelRate = 38400;
+            mPanelManager.openSerialPort(new File(panelNode), panelRate);
+        }
+        return mPanelManager;
+    }
+
+    public SerialPort getSerialPort() throws SecurityException, IOException, InvalidParameterException {
+        if (mSerialPort == null) {
+            /* Read serial port parameters */
+            SharedPreferences sp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
+            String path = sp.getString(Constant.WEGHT_NODE, "");
+            int baudrate = Integer.decode(sp.getString(Constant.WEGHT_RATE, "-1"));
+
+            XLog.e("---", "getSerialPort()", path, baudrate);
+            /* Check parameters */
+            if ((path.length() == 0) || (baudrate == -1)) {
+                throw new InvalidParameterException();
+            }
+
+            /* Open the serial port */
+            mSerialPort = new SerialPort(new File(path), baudrate, 0);
+        }
+        return mSerialPort;
+    }
+
+    public void closeSerialPort() {
+        if (mSerialPort != null) {
+            mSerialPort.close();
+            mSerialPort = null;
+        }
+    }
+
+    public void closeAllSerialPort() {
+        if (mPanelManager != null) {
+            mPanelManager.closeSerialPort();
+            mPanelManager = null;
+        }
+
+        if (mPrintManager != null) {
+            mPrintManager.closeSerialPort();
+            mPrintManager = null;
+        }
+
+        if (mScanManager != null) {
+            mScanManager.closeSerialPort();
+            mScanManager = null;
+        }
+        if (mWeightManager != null) {
+            mWeightManager.closeSerialPort();
+            mWeightManager = null;
+        }
     }
 
 }
