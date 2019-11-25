@@ -52,7 +52,7 @@ import retrofit2.http.QueryMap;
  */
 public interface ApiService {
 
-//    String BASE_URL = "http://chunlv.hanziyi.cn/";
+    //    String BASE_URL = "http://chunlv.hanziyi.cn/";
     String BASE_URL = "http://qidian.365igc.cn/";
     long DEFAULT_TIME = 30;
     String IMG_URL = "http://chunlv.hanziyi.cn/Uploads/Public/";
@@ -69,7 +69,7 @@ public interface ApiService {
      * banner图
      */
     @GET("index.php/api/anyu/news")
-    Observable<BannerDao> getBanner(@Query("status") int status,@Query("uid")String userid);
+    Observable<BannerDao> getBanner(@Query("status") int status, @Query("uid") String userid);
 
     /**
      * 签到
@@ -159,7 +159,7 @@ public interface ApiService {
      * @return
      */
     @GET("index.php/api/suggest/guan")
-    Observable<CunGuanDao> getCuntryList(@Query("id") String id,@Query("status")int status);
+    Observable<CunGuanDao> getCuntryList(@Query("id") String id, @Query("status") int status);
 
     @GET("index/index/list_cgs")
     Observable<GuanDao> getGuanList(@Query("address") String address);
@@ -230,7 +230,7 @@ public interface ApiService {
      * 商品分类
      */
     @GET("index.php/Api/goods/fenlei")
-    Observable<MallCatgrayDao> getMallCatgray(@Query("id")String userId);
+    Observable<MallCatgrayDao> getMallCatgray(@Query("id") String userId);
 
     /**
      * 分类商品
@@ -346,19 +346,19 @@ public interface ApiService {
      * 我的数据记录
      */
     @GET("index.php/api/anyu/shuju")
-    Observable<RecordDao> getRecord(@Query("id") String id,@Query("start")String start,@Query("end")String end);
+    Observable<RecordDao> getRecord(@Query("id") String id, @Query("start") String start, @Query("end") String end);
 
     /**
      * 修改手机号码
      */
     @FormUrlEncoded
     @POST("index.php/api/user/phone")
-    Observable<CommonDao> motifyPhone(@Field("id")String id,@Field("status")String status,@Field("phone")String phone);
+    Observable<CommonDao> motifyPhone(@Field("id") String id, @Field("status") String status, @Field("phone") String phone);
 
     @FormUrlEncoded
     @POST("index.php/api/user/mima")
-    Observable<CommonDao> motifyPwd(@Field("id")String id,@Field("status")String status,@Field("pass")String pass
-    ,@Field("xpass")String xpass,@Field("qpass")String qpass);
+    Observable<CommonDao> motifyPwd(@Field("id") String id, @Field("status") String status, @Field("pass") String pass
+            , @Field("xpass") String xpass, @Field("qpass") String qpass);
 
 
     /**
@@ -366,19 +366,19 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("index.php/api/user/head")
-    Observable<CommonDao> motifyHead(@Field("id")String id,@Field("img")String img);
+    Observable<CommonDao> motifyHead(@Field("id") String id, @Field("img") String img);
 
     /**
-     *积分订单
+     * 积分订单
      */
     @GET("index.php/api/user/book")
-    Observable<PointDao> getPoints(@Query("id")String id,@Query("flag")String flag);
+    Observable<PointDao> getPoints(@Query("id") String id, @Query("flag") String flag);
 
     /**
      * 采集员回收订单
      */
     @GET("index.php/api/order/caiji")
-    Observable<HandDao> getHand(@Query("id")String id);
+    Observable<HandDao> getHand(@Query("id") String id);
 
     /**
      * 采集员确定订单
@@ -391,11 +391,11 @@ public interface ApiService {
      * 采集员首页头
      */
     @GET("index.php/api/suggest/tt")
-    Observable<TitleDao> getTitle(@Query("id") String id,@Query("status") int type);
+    Observable<TitleDao> getTitle(@Query("id") String id, @Query("status") int type);
 
     @FormUrlEncoded
     @POST("index.php/Api/order/order_cl")
-    Observable<CommonDao> handRecy(@FieldMap Map<String ,String> map);
+    Observable<CommonDao> handRecy(@FieldMap Map<String, String> map);
 
 
     @FormUrlEncoded
@@ -410,8 +410,12 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/jqi/pfen_news")
-    Observable<Object> mark(@Field("n_code") String userId,@Field("status") int status,@Field("uid") String uid,
-                            @Field("img") String img,@Field("jifen") String jifen,@Field("weight")String wegit);
+    Observable<Object> mark(@Field("n_code") String userId, @Field("status") int status, @Field("uid") String uid,
+                            @Field("img") String img, @Field("jifen") String jifen, @Field("weight") String wegit,
+                            @Field("flag_status") String flag_status,
+                            @Field("flag_status1") String flag_status1,
+                            @Field("flag_status2") String flag_status2,
+                            @Field("flag_status3") String flag_status3);
 
 
 }

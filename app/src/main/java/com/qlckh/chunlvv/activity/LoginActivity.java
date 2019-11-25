@@ -279,10 +279,10 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     private boolean checkData() {
-        if (!NetworkUtils.isNetWorkAvailable()) {
+        /*if (!NetworkUtils.isNetWorkAvailable()) {
             showShort("网络不可用,请设置网络");
             return false;
-        }
+        }*/
         if (isEmpty(phoneEdit.getText().toString().trim())) {
             showShort("请输入用户名");
             return false;

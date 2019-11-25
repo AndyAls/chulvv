@@ -73,60 +73,268 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
-        android:text="评价"
-        android:textColor="@color/dark_green"
-        android:textSize="@dimen/sp22"
-        android:textStyle="bold" />
-
-    <RadioGroup
-        android:id="@+id/rg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp5"
-        android:orientation="horizontal">
-
-
-        <RadioButton
-            android:id="@+id/rb1"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:padding="@dimen/dp10"
-            android:text="好"
-            android:checked="true"
-            android:textColor="@color/status_green"
-            android:textSize="@dimen/sp25" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="桶是否摆放正确"
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgTong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
 
-        <RadioButton
-            android:id="@+id/rb2"
-            android:layout_width="0dp"
+                <RadioButton
+                    android:id="@+id/rbTong1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:checked="true"
+                    android:padding="@dimen/dp2"
+                    android:text="好"
+                    android:textColor="@color/status_green"
+                    android:textSize="@dimen/sp25" />
+
+
+                <RadioButton
+                    android:id="@+id/rbTong2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="差"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:padding="@dimen/dp10"
-            android:text="中"
-            android:textColor="@color/font_org_color"
-            android:textSize="@dimen/sp25" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="庭院是否整洁    "
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgTing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
 
+                <RadioButton
+                    android:id="@+id/rbTing1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:checked="true"
+                    android:padding="@dimen/dp2"
+                    android:text="好"
+                    android:textColor="@color/status_green"
+                    android:textSize="@dimen/sp25" />
 
-        <RadioButton
-            android:id="@+id/rb3"
-            android:layout_width="0dp"
+
+                <RadioButton
+                    android:id="@+id/rbTing2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="差"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:padding="@dimen/dp10"
-            android:text="差"
-            android:textColor="@color/red"
-            android:textSize="@dimen/sp25" />
-    </RadioGroup>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="桶身是否清洁    "
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgSheng"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <RadioButton
+                    android:id="@+id/rbsheng1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:checked="true"
+                    android:padding="@dimen/dp2"
+                    android:text="好"
+                    android:textColor="@color/status_green"
+                    android:textSize="@dimen/sp25" />
+
+
+                <RadioButton
+                    android:id="@+id/rbsheng2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="差"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="垃圾是否入桶    "
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rgLa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <RadioButton
+                    android:id="@+id/rbla1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:checked="true"
+                    android:padding="@dimen/dp2"
+                    android:text="好"
+                    android:textColor="@color/status_green"
+                    android:textSize="@dimen/sp25" />
+
+
+                <RadioButton
+                    android:id="@+id/rbla2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="差"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25" />
+            </RadioGroup>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评价                     "
+                android:textColor="@color/dark_green"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:checked="true"
+                    android:padding="@dimen/dp2"
+                    android:text="好"
+                    android:textColor="@color/status_green"
+                    android:textSize="@dimen/sp25" />
+
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="中"
+                    android:textColor="@color/font_org_color"
+                    android:textSize="@dimen/sp25" />
+
+
+                <RadioButton
+                    android:id="@+id/rb3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:padding="@dimen/dp2"
+                    android:text="差"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25" />
+            </RadioGroup>
+
+        </LinearLayout>
 
 
     <LinearLayout
