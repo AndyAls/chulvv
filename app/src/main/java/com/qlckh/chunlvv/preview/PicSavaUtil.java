@@ -42,8 +42,8 @@ public class PicSavaUtil {
     }
 
 
-    public static void save(Context context,String filePath) {
-        String path=getSavaPath(context);
+    public static void save(Context context, String filePath) {
+        String path = getSavaPath(context);
         File targetFile = new File(path + "/" + System.currentTimeMillis() + ".jpg");
         File file = new File(filePath);
         if (checkFile(file)) {
@@ -57,36 +57,36 @@ public class PicSavaUtil {
                 }
                 fis.close();
                 fos.close();
-                addMediaStore(context,targetFile,path);
-                if (mListener!=null){
+                addMediaStore(context, targetFile, path);
+                if (mListener != null) {
                     mListener.onSavaSuccess();
                 }
             } catch (FileNotFoundException e) {
-                Log.e(TAG, e.getMessage() );
-                if (mListener!=null){
+                Log.e(TAG, e.getMessage());
+                if (mListener != null) {
                     mListener.onSavaFailed();
                 }
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage() );
-                if (mListener!=null){
+                Log.e(TAG, e.getMessage());
+                if (mListener != null) {
                     mListener.onSavaFailed();
                 }
             }
-        }else {
+        } else {
 
             DownLoadTask task = new DownLoadTask(context);
             task.execute(filePath);
         }
     }
 
-    private static String getSavaPath(Context context) {
+    public static String getSavaPath(Context context) {
         String rootPath;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            rootPath=Environment.getExternalStorageDirectory().getPath();
-        }else{
-            rootPath= context.getFilesDir().getPath();
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            rootPath = Environment.getExternalStorageDirectory().getPath();
+        } else {
+            rootPath = context.getFilesDir().getPath();
         }
-        String path = rootPath + File.separator + context.getPackageName()+File.separator+"IM";
+        String path = rootPath + File.separator + context.getPackageName() + File.separator + "IM";
         File picDir = new File(path);
         if (!picDir.exists()) {
             picDir.mkdirs();
@@ -95,7 +95,7 @@ public class PicSavaUtil {
     }
 
     //遍历相册
-    public static void scanleAlbum(Context context,String photoPath) {
+    public static void scanleAlbum(Context context, String photoPath) {
         if (photoPath == null) {
             return;
         }
@@ -113,10 +113,11 @@ public class PicSavaUtil {
             }
         }
     }
+
     /**
      * @param context
      * @param targetFile 要保存的照片文件
-     * @param path  要保存的照片的路径地址
+     * @param path       要保存的照片的路径地址
      */
     private static void addMediaStore(Context context, File targetFile, String path) {
         ContentResolver resolver = context.getContentResolver();
@@ -127,16 +128,16 @@ public class PicSavaUtil {
         newValues.put(MediaStore.Images.Media.SIZE, targetFile.length());
         newValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, newValues);
-        scanleAlbum(context,path);
+        scanleAlbum(context, path);
     }
 
-    private static class DownLoadTask extends AsyncTask<String,Void,Bitmap>{
+    private static class DownLoadTask extends AsyncTask<String, Void, Bitmap> {
 
         @SuppressLint("StaticFieldLeak")
         private Context mContext;
 
         private DownLoadTask(Context context) {
-            this.mContext=context;
+            this.mContext = context;
         }
 
         @Override
@@ -147,13 +148,13 @@ public class PicSavaUtil {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            saveImageToPhotos(bitmap,mContext);
+            saveImageToPhotos(bitmap, mContext);
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            mContext=null;
+            mContext = null;
         }
     }
 
@@ -174,20 +175,21 @@ public class PicSavaUtil {
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
-            if (mListener!=null){
+            if (mListener != null) {
                 mListener.onSavaSuccess();
             }
         } catch (FileNotFoundException e) {
-            if (mListener!=null){
+            if (mListener != null) {
                 mListener.onSavaFailed();
             }
         } catch (IOException e) {
-            if (mListener!=null){
+            if (mListener != null) {
                 mListener.onSavaFailed();
             }
         }
-        addMediaStore(context,file,savaPath);
+        addMediaStore(context, file, savaPath);
     }
+
     /**
      * 将URL转化成bitmap形式
      *
@@ -206,19 +208,22 @@ public class PicSavaUtil {
             InputStream is = conn.getInputStream();
             bitmap = BitmapFactory.decodeStream(is);
         } catch (MalformedURLException e) {
-            Log.e(TAG, e.getMessage() );
+            Log.e(TAG, e.getMessage());
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage() );
+            Log.e(TAG, e.getMessage());
         }
         return bitmap;
     }
-    public interface OnSavaSuccessListener{
+
+    public interface OnSavaSuccessListener {
 
         void onSavaSuccess();
+
         void onSavaFailed();
 
     }
-    public static void setOnSavaSuccessListener(OnSavaSuccessListener listener){
+
+    public static void setOnSavaSuccessListener(OnSavaSuccessListener listener) {
         mListener = listener;
     }
 }

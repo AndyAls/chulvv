@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
             android:padding="@dimen/dp5"
             android:text="注意:如果称重偏差太大,请先把称上面的东西拿掉,点击下面归零按钮后重新称取"
             android:textColor="@color/red"
+            android:textSize="@dimen/sp25"
             android:textStyle="bold"
-            android:textSize="@dimen/sp20"
             android:visibility="visible" />
 
         <TextView
@@ -32,87 +32,371 @@
             android:padding="@dimen/dp5"
             android:text="注意:如果称重偏差太大,请先把称上面的东西拿掉,点击下面归零按钮后重新称取"
             android:textColor="@color/red"
+            android:textSize="@dimen/sp25"
             android:textStyle="bold"
-            android:textSize="@dimen/sp20"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp5"
-            android:paddingBottom="@dimen/dp5"
-            android:paddingLeft="@dimen/dp65"
-            android:paddingRight="@dimen/dp65"
-            android:text="归零"
-            android:textSize="18sp"
-            android:background="@drawable/selector_top_ok"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_top_ok"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp65"
+                android:paddingTop="@dimen/dp5"
+                android:paddingRight="@dimen/dp65"
+                android:paddingBottom="@dimen/dp5"
+                android:text="归零"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp2"
             android:orientation="horizontal">
 
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户姓名:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp18" />
+                android:layout_marginTop="@dimen/dp2"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:id="@+id/tvName"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户姓名:"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30" />
+
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp6"
+                    android:text="用户姓名:用"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp30" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp6"
-                android:text="用户姓名:用户姓名用户姓名用户姓名"
-                android:textColor="#AB333333"
-                android:textSize="@dimen/sp16" />
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp2"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户住址:"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30" />
+
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp6"
+                    android:text="用户姓名:名"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp30" />
+            </LinearLayout>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp2"
+            android:layout_marginTop="@dimen/dp15"
             android:orientation="horizontal">
 
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="用户住址:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp18" />
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="桶是否摆放正确"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp30" />
+
+                <TextView
+                    android:id="@+id/tvTong1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="好"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+                <TextView
+                    android:id="@+id/tvTong2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="差"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+            </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp6"
-                android:text="用户姓名:用户姓名用户姓名用户姓名"
-                android:textColor="#AB333333"
-                android:textSize="@dimen/sp16" />
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:text="庭院是否整洁"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp30" />
+
+                <TextView
+                    android:id="@+id/tvTing1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="好"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+                <TextView
+                    android:id="@+id/tvTing2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="差"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="桶身是否清洁    "
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp30" />
+
+                <TextView
+                    android:id="@+id/tvSheng1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="好"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+                <TextView
+                    android:id="@+id/tvSheng2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="差"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:text="垃圾是否入桶"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30" />
+
+                <TextView
+                    android:id="@+id/tvLa1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="好"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+                <TextView
+                    android:id="@+id/tvLa2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="差"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评价"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评价评价评"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/tvPing1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="好"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+                <TextView
+                    android:id="@+id/tvPing2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="中"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+
+
+                <TextView
+                    android:id="@+id/tvPing3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_tong1"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="差"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp25" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -175,107 +459,122 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp15">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="得分:  "
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp20" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="得分:  "
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30" />
 
 
-            <TextView
-                android:id="@+id/tv_score"
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp30"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
-                android:textColor="@color/red"
-                android:textSize="@dimen/sp20" />
+                android:layout_marginLeft="@dimen/dp55"
+                android:gravity="center_vertical">
 
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="称重:"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp30" />
+
+                <EditText
+                    android:id="@+id/etWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:background="@drawable/bg_editext_default"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:hint="0"
+                    android:paddingLeft="@dimen/dp35"
+                    android:paddingTop="@dimen/dp3"
+                    android:paddingRight="@dimen/dp35"
+                    android:paddingBottom="@dimen/dp3"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp25"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="kg"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp30" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp55"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="拍照:"
+                    android:textColor="@color/text_color_normal"
+                    android:textSize="@dimen/sp30"
+                    android:textStyle="bold"/>
+
+                <com.qlckh.chunlvv.view.PicGridView
+                    android:id="@+id/picModify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginRight="@dimen/dp20"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/dp7">
+
+                </com.qlckh.chunlvv.view.PicGridView>
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
-            android:gravity="center_vertical">
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="称重:"
-                android:textColor="@color/text_color_normal"
-                android:textSize="@dimen/sp20" />
-
-            <EditText
-                android:id="@+id/etWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp5"
-                android:background="@drawable/bg_editext_default"
-                android:enabled="false"
-                android:clickable="false"
-                android:hint="0"
-                android:paddingLeft="@dimen/dp35"
-                android:paddingTop="@dimen/dp3"
-                android:paddingRight="@dimen/dp35"
-                android:paddingBottom="@dimen/dp3"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/red"
-                android:textSize="@dimen/sp20"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp5"
-                android:layout_marginRight="@dimen/dp5"
-                android:text="kg"
-                android:textColor="@color/text_color_normal"
-                android:textSize="@dimen/sp22" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="拍照:"
-                android:textColor="@color/text_color_normal"
-                android:textSize="@dimen/sp20" />
-
-            <com.qlckh.chunlvv.view.PicGridView
-                android:id="@+id/picModify"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp20"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/dp7">
-
-            </com.qlckh.chunlvv.view.PicGridView>
-        </LinearLayout>
-
 
         <Button
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_marginLeft="@dimen/dp62"
-            android:layout_marginRight="@dimen/dp22"
             android:background="@drawable/bg_btn_sign"
             android:gravity="center"
             android:text="提交评价"
+            android:paddingBottom="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp15"
+            android:paddingTop="@dimen/dp15"
+            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="55sp"
+            android:visibility="visible" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -5,10 +5,17 @@ import android.os.Handler
 import android.view.View
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.activity.LoginActivity
+import com.qlckh.chunlvv.api.ApiService
+import com.qlckh.chunlvv.api.NetCostant
 import com.qlckh.chunlvv.base.BaseActivity
 import com.qlckh.chunlvv.carpaly.ConvertUtils
 import com.qlckh.chunlvv.common.XLog
+import com.qlckh.chunlvv.http.RxHttpUtils
+import com.qlckh.chunlvv.http.interceptor.Transformer
+import com.qlckh.chunlvv.http.observer.CommonObserver
+import com.qlckh.chunlvv.qidian.StoreDao
 import com.qlckh.chunlvv.user.UserConfig
+import com.qlckh.chunlvv.utils.PhoneUtil
 
 /**
  * @author Andy
@@ -45,26 +52,82 @@ class IntelligentLuanchActivity : BaseActivity() {
     }
 
     override fun initDate() {
+
         mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
-        if (intent.action=="restart"||intent.type=="restart"){
+        if (intent.action == "restart" || intent.type == "restart") {
             startActivity(Intent(this, IntenlligentMarkActivity::class.java))
             finish()
             overridePendingTransition(0, 0)
-        }else{
-
-            Handler().postDelayed({
-                if (UserConfig.isLogin()) {
-                    if (UserConfig.getType() == 0) {
-                        Handler().postDelayed({ this.toMian() }, 1000)
-                    }
-                } else {
-                    toLogin()
-                }
-            },1000)
-            //评分
+        } else {
+            if (UserConfig.isAuth()) {
+                NetCostant.BASE_URL = ApiService.BASE_URL
+                initHttp()
+                auth()
+            } else {
+                toAuth()
+            }
 
         }
 
+    }
+
+    private fun auth() {
+
+        RxHttpUtils.createApi(ApiService::class.java)
+                .auth(UserConfig.getServiceUrl(), PhoneUtil.getIMEI(this),
+                        UserConfig.getSavaFullname(), UserConfig.getSavaUsername(),
+                        UserConfig.getSavaPhone(), UserConfig.getSavaCode())
+                .compose(Transformer.switchSchedulers())
+                .subscribe(object : CommonObserver<StoreDao>() {
+                    override fun onError(errorMsg: String?) {
+                        showShort(errorMsg)
+                        UserConfig.savaAuth(false)
+                    }
+
+                    override fun onSuccess(t: StoreDao?) {
+                        //授权成功
+                        if (t != null && t.status == 1) {
+                            UserConfig.savaAuth(true)
+                            NetCostant.BASE_URL = UserConfig.getServiceUrl()
+                            initHttp()
+                            if (UserConfig.isLogin()) {
+                                if (UserConfig.getType() == 0) {
+                                    toMian()
+                                }
+                            } else {
+                                toLogin()
+                            }
+
+                        } else {
+                            showShort(t?.data ?: "授权失败")
+                            UserConfig.savaAuth(false)
+                            toAuth()
+                        }
+                    }
+
+
+                })
+    }
+
+    private fun initHttp() {
+        RxHttpUtils
+                .getInstance()
+                .config()
+                .setBaseUrl(NetCostant.BASE_URL)
+                .setCookie(false)
+                .setSslSocketFactory()
+                .setReadTimeout(ApiService.DEFAULT_TIME) //全局超时配置
+                .setWriteTimeout(ApiService.DEFAULT_TIME) //全局超时配置
+                .setConnectTimeout(ApiService.DEFAULT_TIME) //全局是否打开请求log日志
+                .setLog(true)
+
+    }
+
+    private fun toAuth() {
+
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
+        overridePendingTransition(0, 0)
     }
 
     override fun release() {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.api.ApiService;
+import com.qlckh.chunlvv.api.NetCostant;
 import com.qlckh.chunlvv.base.BaseMvpActivity;
 import com.qlckh.chunlvv.common.GlideApp;
 import com.qlckh.chunlvv.dao.CommonDao;
@@ -227,7 +228,7 @@ public class MessageDetailActivitiy extends BaseMvpActivity<MessageDetailPresent
             String[] split = image1.split(",");
             picList.clear();
             for (String aSplit : split) {
-                picList.add(ApiService.BASE_URL + aSplit);
+                picList.add(NetCostant.BASE_URL + aSplit);
             }
         }
         setPicShowModule(picList, picItemss);
@@ -243,7 +244,7 @@ public class MessageDetailActivitiy extends BaseMvpActivity<MessageDetailPresent
             if (!isEmpty(eventDao.getCimg())) {
                 String[] split = eventDao.getCimg().split(",");
                 for (String aSplit : split) {
-                    picList2.add(ApiService.BASE_URL + aSplit);
+                    picList2.add(NetCostant.BASE_URL + aSplit);
                 }
                 setPicShowModule(picList2, taskPicItems);
             }

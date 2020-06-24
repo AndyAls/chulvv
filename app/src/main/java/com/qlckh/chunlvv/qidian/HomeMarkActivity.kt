@@ -13,36 +13,40 @@ import android.os.*
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RadioButton
 import com.bumptech.glide.Glide
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.api.ApiService
 import com.qlckh.chunlvv.base.BaseActivity
 import com.qlckh.chunlvv.carpaly.ConvertUtils
+import com.qlckh.chunlvv.common.MediaPlayerHelper
 import com.qlckh.chunlvv.common.XLog
 import com.qlckh.chunlvv.dao.HomeInfo
+import com.qlckh.chunlvv.dao.PostImgDao
 import com.qlckh.chunlvv.http.RxHttpUtils
 import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.http.utils.IntentUtil
-import com.qlckh.chunlvv.intelligent.IntelligentLuanchActivity
+import com.qlckh.chunlvv.http.utils.ScreenUtil
+import com.qlckh.chunlvv.http.utils.ToastUtils
+import com.qlckh.chunlvv.intelligent.CheckMappingActivity
 import com.qlckh.chunlvv.intelligent.IntenlligentMarkActivity
 import com.qlckh.chunlvv.manager.OnSerialPortDataListener
 import com.qlckh.chunlvv.preview.ImgInfo
 import com.qlckh.chunlvv.preview.PrePictureActivity
 import com.qlckh.chunlvv.user.UserConfig
 import com.qlckh.chunlvv.utils.Base64Util
+import com.qlckh.chunlvv.utils.GlideUtil
 import com.qlckh.chunlvv.utils.ImgUtil
+import com.qlckh.chunlvv.utils.ScreenUtils
 import kotlinx.android.synthetic.main.activity_home_mark.*
+import kotlinx.android.synthetic.main.activity_test1.*
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.ref.WeakReference
 import java.math.BigDecimal
-import java.math.MathContext
 import java.util.*
-import kotlin.concurrent.thread
 
 /**
  * @author Andy
@@ -54,6 +58,7 @@ class HomeMarkActivity : BaseActivity() {
     var homeInfo: HomeInfo? = null
     private val REQUEST_CODE_SELECT_GRAINT_URI_FROM_CAMERA = 1000
     private val REQUEST_CODE_SELECT_PIC_FROM_CAMERA = 1001
+    private lateinit var mediaPlayerHelper: MediaPlayerHelper
     private var isDone = true
     private var imgPath = ""
     private val BT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
@@ -64,17 +69,37 @@ class HomeMarkActivity : BaseActivity() {
     private var bluetoothDevice: BluetoothDevice? = null
     private val BUFFER_SIZE = 1024
     var threadAq: Thread? = null
+    var score = 10
+    var score1 = 10
+    var score2 = 10
+    var score3 = 10
+    var score4 = 10
+    var flag_status = "1"
+    var flag_status1 = "1"
+    var flag_status2 = "1"
+    var flag_status3 = "1"
+    private var imagesId = ""
     override fun initView() {
 
         setTitle("易腐垃圾")
         ibRight.visibility = View.GONE
         ibRight.setText("提交评价")
-        initlistener()
         setPic()
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 //        searchDevices();
         listenerThread = ListenerThread()
+        setScore()
+        setView()
 //        listenerThread!!.start()
+    }
+
+    private fun setView() {
+
+        tvTong1.isSelected = true
+        tvTing1.isSelected = true
+        tvSheng1.isSelected = true
+        tvLa1.isSelected = true
+        tvPing1.isSelected = true
     }
 
     /**
@@ -87,6 +112,11 @@ class HomeMarkActivity : BaseActivity() {
         bluetoothAdapter!!.startDiscovery()
         getBoundedDevices()
 
+    }
+
+    private fun setScore() {
+        val totalScore = score + score4 + score3 + score2 + score1
+        tv_score.text = totalScore.toString()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -288,24 +318,13 @@ class HomeMarkActivity : BaseActivity() {
         return StringBuilder(str).reverse().toString()
     }
 
-    private fun initlistener() {
-
-        submit.setOnClickListener {
-            if (isDone) {
-                postData()
-            } else {
-                showShort("等待图片上传,请稍后重试")
-            }
-        }
-        button.setOnClickListener {
-            mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
-        }
-    }
 
     private fun postData() {
         loading()
         RxHttpUtils.createApi(ApiService::class.java)
-                .mark(intent.getStringExtra("ncode"), status, UserConfig.getUserid(), imgPath, tv_score.text.toString(), etWeight.text.toString())
+                .mark1(intent.getStringExtra("ncode"), status, UserConfig.getUserid(), imagesId,
+                        tv_score.text.toString(), etWeight.text.toString(),
+                        flag_status, flag_status1, flag_status2, flag_status3)
                 .compose(Transformer.switchSchedulers())
                 .subscribe(object : CommonObserver<Any>() {
                     override fun onError(errorMsg: String) {
@@ -315,10 +334,19 @@ class HomeMarkActivity : BaseActivity() {
 
                     override fun onSuccess(homeInfo: Any) {
                         cancelLoading()
-                        showShort("评价成功~~")
-                        val intent = Intent(this@HomeMarkActivity, IntenlligentMarkActivity::class.java)
-                        startActivity(intent)
-                        finish()
+//                        showShort("评价成功~~")
+                        if (tv_score.text.toString().trim().toDouble() >= 37) {
+                            mediaPlayerHelper.startPlay(R.raw.hege)
+                        } else {
+                            mediaPlayerHelper.startPlay(R.raw.buhege)
+                        }
+                        Handler().postDelayed({
+                            cancelLoading()
+                            val intent = Intent(this@HomeMarkActivity, IntenlligentMarkActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }, 3500)
+
 
                     }
                 })
@@ -343,24 +371,111 @@ class HomeMarkActivity : BaseActivity() {
             tvName.text = homeInfo!!.data.fullname
             tvAddress.text = homeInfo!!.data.company
         }
-        rg.setOnCheckedChangeListener { group, checkedId ->
-            val findViewById = group.findViewById<RadioButton>(checkedId)
-            if (!findViewById.isPressed) {
-                return@setOnCheckedChangeListener
-            }
-            if (checkedId == rb1.id) {
-                status = 1
-                tv_score.text = "5"
-            } else if (checkedId == rb2.id) {
-                status = 2
-                tv_score.text = "3"
-            } else {
-                status = 0
-                tv_score.text = "1"
+        initListener()
+        setWeightListener()
 
+        val intent = Intent(this, CheckMappingActivity::class.java)
+        startActivityForResult(intent, 19999)
+        mediaPlayerHelper = MediaPlayerHelper.getInstance(this)
+    }
+
+    private fun initListener() {
+
+        submit.setOnClickListener {
+            if (imagesId.isNotEmpty()) {
+                postData()
+            } else {
+                showShort("等待图片上传,请稍后重试")
             }
         }
-        setWeightListener()
+        button.setOnClickListener {
+            mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
+        }
+        tvPing1.setOnClickListener {
+            status = 1
+            score = 10
+            setScore()
+            tvPing1.isSelected = true
+            tvPing2.isSelected = false
+            tvPing3.isSelected = false
+        }
+        tvPing2.setOnClickListener {
+            status = 2
+            score = 3
+            setScore()
+            tvPing1.isSelected = false
+            tvPing2.isSelected = true
+            tvPing3.isSelected = false
+
+        }
+        tvPing3.setOnClickListener {
+            status = 0
+            score = 1
+            setScore()
+            tvPing1.isSelected = false
+            tvPing2.isSelected = false
+            tvPing3.isSelected = true
+        }
+
+        tvTong1.setOnClickListener {
+            flag_status = "1"
+            score1 = 10
+            setScore()
+            tvTong1.isSelected = true
+            tvTong2.isSelected = false
+        }
+        tvTong2.setOnClickListener {
+            flag_status = "0"
+            score1 = 0
+            setScore()
+            tvTong1.isSelected = false
+            tvTong2.isSelected = true
+        }
+
+
+        tvTing1.setOnClickListener {
+            flag_status1 = "1"
+            score2 = 10
+            setScore()
+            tvTing1.isSelected = true
+            tvTing2.isSelected = false
+        }
+
+        tvTing2.setOnClickListener {
+            flag_status1 = "0"
+            score2 = 0
+            setScore()
+            tvTing1.isSelected = false
+            tvTing2.isSelected = true
+        }
+        tvSheng1.setOnClickListener {
+            score3 = 10
+            flag_status2 = "1"
+            setScore()
+            tvSheng1.isSelected = true
+            tvSheng2.isSelected = false
+        }
+        tvSheng2.setOnClickListener {
+            score3 = 0
+            flag_status2 = "0"
+            setScore()
+            tvSheng1.isSelected = false
+            tvSheng2.isSelected = true
+        }
+        tvLa1.setOnClickListener {
+            score4 = 10
+            flag_status3 = "1"
+            setScore()
+            tvLa1.isSelected = true
+            tvLa2.isSelected = false
+        }
+        tvLa2.setOnClickListener {
+            score4 = 0
+            flag_status3 = "0"
+            setScore()
+            tvLa1.isSelected = false
+            tvLa2.isSelected = true
+        }
     }
 
     private fun setWeightListener() {
@@ -402,7 +517,7 @@ class HomeMarkActivity : BaseActivity() {
             return
         }
         if (buffer.length == 18) {
-            tvState.text = buffer.toString()
+//            tvState.text = buffer.toString()
             if (getMeight(buffer.toString()).toDouble() > 100) {
                 mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
                 etWeight.setText("0")
@@ -439,11 +554,12 @@ class HomeMarkActivity : BaseActivity() {
     internal var imgInfos = ArrayList<ImgInfo>()
     private var photoPath: String? = null
     private val picFilePathList = ArrayList<String?>()
+
     /**
      * 设置照片
      */
     private fun setPic() {
-        picModify.setColumNum(4)
+        picModify.setColumNum(1)
         picModify.removeAllViews()
         imgInfos.clear()
         var i = 0
@@ -451,7 +567,7 @@ class HomeMarkActivity : BaseActivity() {
         while (i < picFilePathListSize) {
             val filePath = picFilePathList.get(i)
             val iv = ImageView(this)
-            val params = LinearLayout.LayoutParams(35, 35)
+            val params = LinearLayout.LayoutParams(ScreenUtils.dp2px(this, 65f), ScreenUtils.dp2px(this, 65f))
             iv.scaleType = ImageView.ScaleType.CENTER_CROP
             iv.layoutParams = params
             picModify.addView(iv)
@@ -466,22 +582,22 @@ class HomeMarkActivity : BaseActivity() {
         }
 
         val iv = ImageView(this)
-        val params = LinearLayout.LayoutParams(35, 35)
+        val params = LinearLayout.LayoutParams(ScreenUtils.dp2px(this, 65f), ScreenUtils.dp2px(this, 65f))
         iv.layoutParams = params
-        if (picModify.getChildCount() < 4) {
+        if (picModify.getChildCount() < 1) {
             picModify.addView(iv)
         }
         iv.setImageResource(R.drawable.ic_take_photo)
         iv.setBackgroundColor(Color.WHITE)
         iv.setOnClickListener { v ->
-            photoPath = ImgUtil.getPicSavaPath(this) + "/" + System.currentTimeMillis() + ".jpg"
-            if (Build.VERSION.SDK_INT > 23) {
-                startActivityForResult(IntentUtil.getGrantPicFromCameraIntent(this@HomeMarkActivity, photoPath),
-                        REQUEST_CODE_SELECT_GRAINT_URI_FROM_CAMERA)
-            } else {
-                startActivityForResult(IntentUtil.getPicFromCameraIntent(photoPath),
-                        REQUEST_CODE_SELECT_PIC_FROM_CAMERA)
-            }
+            /* photoPath = ImgUtil.getPicSavaPath(this) + "/" + System.currentTimeMillis() + ".jpg"
+             if (Build.VERSION.SDK_INT > 23) {
+                 startActivityForResult(IntentUtil.getGrantPicFromCameraIntent(this@HomeMarkActivity, photoPath),
+                         REQUEST_CODE_SELECT_GRAINT_URI_FROM_CAMERA)
+             } else {
+                 startActivityForResult(IntentUtil.getPicFromCameraIntent(photoPath),
+                         REQUEST_CODE_SELECT_PIC_FROM_CAMERA)
+             }*/
         }
     }
 
@@ -551,11 +667,30 @@ class HomeMarkActivity : BaseActivity() {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+        imagesId = ""
+        mediaPlayerHelper.release()
+        if (!filePath.isNotEmpty()) {
+            val file = File(filePath)
+            if (file.exists()) {
+                file.delete()
+            }
+            filePath = ""
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mediaPlayerHelper.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mediaPlayerHelper.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
+        if (data != null && resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_SELECT_PIC_FROM_CAMERA -> {
                     picFilePathList.add(photoPath)
@@ -569,10 +704,18 @@ class HomeMarkActivity : BaseActivity() {
                     Handler().post { this.setPic() }
                     doTask(compress1)
                 }
+                19999 -> {
+                    filePath = data.getStringExtra("filePath") ?: ""
+                    picFilePathList.add(filePath)
+                    val compress = ImgUtil.compress(File(filePath), 55, 2100000)
+                            Handler().post { this.setPic() }
+                    doTask(compress)
+                }
             }
         }
     }
 
+    private var filePath = ""
     private fun doTask(compress: File) {
 
         val task = MyTask(this)
@@ -603,10 +746,24 @@ class HomeMarkActivity : BaseActivity() {
             if (activity == null || activity.isFinishing) {
                 return
             }
-            activity.imgPath += s
-            XLog.e("+++", "s", s)
-            XLog.e("+++", "imgPath", activity.imgPath)
-            activity.isDone = true
+            RxHttpUtils.createApi(ApiService::class.java)
+                    .postImg(UserConfig.getUserid(), s)
+                    .compose(Transformer.switchSchedulers())
+                    .subscribe(object : CommonObserver<PostImgDao>() {
+                        override fun onError(errorMsg: String?) {
+                        }
+
+                        override fun onSuccess(t: PostImgDao?) {
+                            if (t?.status == "200") {
+                                activity.imagesId = t.data
+                            }
+
+                        }
+                    })
+            /*  activity.imgPath += s
+              XLog.e("+++", "s", s)
+              XLog.e("+++", "imgPath", activity.imgPath)
+              activity.isDone = true*/
         }
 
         override fun onCancelled() {

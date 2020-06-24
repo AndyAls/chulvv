@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -78,5 +78,15 @@
     <style name="select_dialog_animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="CustomAppTheme_textInputLayout" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:textColorHint">#E8BDBDBD</item>
+        <item name="colorControlNormal">#00C853</item>
+        <item name="colorControlActivated">#38CC3D</item>
+        <item name="colorControlHighlight">#00C853</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="android:colorError" tools:targetApi="o">@color/red</item>
     </style>
 </resources>

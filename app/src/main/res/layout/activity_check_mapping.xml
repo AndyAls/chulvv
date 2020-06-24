@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:keepScreenOn="true"
+		android:orientation="vertical">
+
+			<!-- Camera -->
+			<io.fotoapparat.view.CameraView
+					android:id="@+id/cameraView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:visibility="visible">
+
+				<!--Optionally add tap to focus-->
+				<io.fotoapparat.view.FocusView
+						android:id="@+id/focusView"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" />
+			</io.fotoapparat.view.CameraView>
+
+
+</LinearLayout>

@@ -16,6 +16,12 @@ public class UserConfig {
     public static final String USER_TYPE = "USER_TYPE";
     public static final String USER_ID = "USERUSER_ID";
     public static final String IS_LOGIN = "IS_LOGIN";
+    public static final String IS_AUTH = "IS_AUTH";
+    public static final String SERVICE_URL = "SERVICE_URL";
+    public static final String SAVA_FULLNAME = "sava_fullname";
+    public static final String SAVA_USERNAME = "sava_username";
+    public static final String SAVA_PHONE = "sava_phone";
+    public static final String SAVA_CODE= "sava_code";
     private static SharedPreferences sp;
 
     public static UserInfo userInfo;
@@ -87,11 +93,64 @@ public class UserConfig {
         return sp.getBoolean(IS_LOGIN, false);
     }
 
+    public static void savaAuth(boolean isAuth){
+        sp.edit().putBoolean(IS_AUTH,isAuth).apply();
+    }
+    public static boolean isAuth(){
+        return sp.getBoolean(IS_AUTH,false);
+    }
+
+    public static void savaServiceUrl(String url){
+
+        sp.edit().putString(SERVICE_URL,"http://"+url+"/").apply();
+    }
+
+    public static String getServiceUrl(){
+        return sp.getString(SERVICE_URL,"");
+    }
+    public static void savaFullname(String fullName){
+
+        sp.edit().putString(SAVA_FULLNAME,fullName).apply();
+    }
+    public static String getSavaFullname(){
+
+        return sp.getString(SAVA_FULLNAME,"");
+    }
+
+    public static void savaUsername(String userName){
+
+        sp.edit().putString(SAVA_USERNAME,userName).apply();
+    }
+    public static String getSavaUsername(){
+
+        return sp.getString(SAVA_USERNAME,"");
+    }
+
+    public static void savaPhone(String phone){
+
+        sp.edit().putString(SAVA_PHONE,phone).apply();
+    }
+    public static String getSavaPhone(){
+
+        return sp.getString(SAVA_PHONE,"");
+    }
+
+    public static void savaCode(String code){
+
+        sp.edit().putString(SAVA_CODE,code).apply();
+    }
+    public static String getSavaCode(){
+
+        return sp.getString(SAVA_CODE,"");
+    }
+
+
     public static void reset() {
         savaLogin(false);
         savaPwd("");
         savaType(-1);
         savaUserName("");
+        savaAuth(false);
         savaUserid("");
     }
 

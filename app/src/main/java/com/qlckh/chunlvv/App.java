@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
 import com.qlckh.chunlvv.api.ApiService;
+import com.qlckh.chunlvv.api.NetCostant;
 import com.qlckh.chunlvv.common.GlideApp;
 import com.qlckh.chunlvv.common.LocationService;
 import com.qlckh.chunlvv.common.XLog;
@@ -58,7 +59,7 @@ public class App extends Application {
         XLog.e("--", "onCreate");
         Bugly.init(getApplicationContext(), APPKEY, true);
         Stetho.initializeWithDefaults(this);
-        QbSdk.initX5Environment(this,null);
+        QbSdk.initX5Environment(this, null);
         initCrash();
     }
 
@@ -94,14 +95,17 @@ public class App extends Application {
          */
         RxHttpUtils.init(this);
 
+        if (UserConfig.isAuth()) {
+            NetCostant.BASE_URL = UserConfig.getServiceUrl();
+        }
         RxHttpUtils
                 .getInstance()
                 //开启全局配置
                 .config()
                 //全局的BaseUrl
-                .setBaseUrl(ApiService.BASE_URL)
+                .setBaseUrl(NetCostant.BASE_URL)
                 //开启缓存策略
-                .setCache()
+//                .setCache()
                 //全局的请求头信息
                 //.setHeaders(headerMaps)
                 //全局持久话cookie,保存本地每次都会携带在header中
@@ -167,7 +171,7 @@ public class App extends Application {
             SharedPreferences ssp = getSharedPreferences(Constant.SP_NAME, MODE_PRIVATE);
 //            String scanNode = ssp.getString(Constant.SCAN_NODE, "");
 //            int scanRate = Integer.decode(ssp.getString(Constant.SCAN_RATE, "-1"));
-            String scanNode ="/dev/ttyS1";
+            String scanNode = "/dev/ttyS1";
             //9600
             int scanRate = 9600;
             mScanManager.openSerialPort(new File(scanNode), scanRate);

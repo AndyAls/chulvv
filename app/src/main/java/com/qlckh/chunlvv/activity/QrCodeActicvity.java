@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.api.ApiService;
+import com.qlckh.chunlvv.api.NetCostant;
 import com.qlckh.chunlvv.base.BaseActivity;
 import com.qlckh.chunlvv.user.UserConfig;
 import com.qlckh.chunlvv.utils.GlideUtil;
@@ -38,7 +39,7 @@ public class QrCodeActicvity extends BaseActivity {
     public void initView() {
         setTitle("我的二维码");
         goBack();
-        GlideUtil.displayRoundConnerImg(this, ApiService.BASE_URL+UserConfig.getUserResp().getErimg(),ivQrCode);
+        GlideUtil.displayRoundConnerImg(this, NetCostant.BASE_URL+UserConfig.getUserResp().getErimg(),ivQrCode);
     }
 
     @Override
