@@ -59,13 +59,22 @@ class IntelligentLuanchActivity : BaseActivity() {
             finish()
             overridePendingTransition(0, 0)
         } else {
-            if (UserConfig.isAuth()) {
-                NetCostant.BASE_URL = ApiService.BASE_URL
-                initHttp()
-                auth()
+            if (UserConfig.isLogin()) {
+                if (UserConfig.getType() == 0) {
+                    toMian()
+                }
             } else {
-                toAuth()
+                toLogin()
             }
+            // TODO: 2020/6/29 需要验证把上面去掉  把下面注释放掉即可
+
+            /*  if (UserConfig.isAuth()) {
+                  NetCostant.BASE_URL = ApiService.BASE_URL
+                  initHttp()
+                  auth()
+              } else {
+                  toAuth()
+              }*/
 
         }
 

@@ -97,7 +97,7 @@ public class UserConfig {
         sp.edit().putBoolean(IS_AUTH,isAuth).apply();
     }
     public static boolean isAuth(){
-        return sp.getBoolean(IS_AUTH,false);
+        return sp.getBoolean(IS_AUTH,true);
     }
 
     public static void savaServiceUrl(String url){

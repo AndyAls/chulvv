@@ -94,10 +94,10 @@ public class App extends Application {
          * 全局请求的统一配置
          */
         RxHttpUtils.init(this);
-
-        if (UserConfig.isAuth()) {
+// TODO: 2020/6/29 认证先去掉  需要打开注释去掉即可
+       /* if (UserConfig.isAuth()) {
             NetCostant.BASE_URL = UserConfig.getServiceUrl();
-        }
+        }*/
         RxHttpUtils
                 .getInstance()
                 //开启全局配置
