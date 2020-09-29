@@ -1,7 +1,7 @@
 package com.qlckh.chunlvv.intelligent
 
 import android.content.Intent
-import android.os.Handler
+import android.os.CountDownTimer
 import android.view.View
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.activity.LoginActivity
@@ -14,8 +14,16 @@ import com.qlckh.chunlvv.http.RxHttpUtils
 import com.qlckh.chunlvv.http.interceptor.Transformer
 import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.qidian.StoreDao
+import com.qlckh.chunlvv.user.UseDo
 import com.qlckh.chunlvv.user.UserConfig
+import com.qlckh.chunlvv.utils.GlideUtil
 import com.qlckh.chunlvv.utils.PhoneUtil
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.qidian_launch.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * @author Andy
@@ -31,12 +39,22 @@ class IntelligentLuanchActivity : BaseActivity() {
         val flags = intent.flags
         val scheme = intent.scheme
         val type = intent.type
-        XLog.e("IntelligentLuanchActivity", "action--" + action
-                , "dataString--" + dataString,
+        XLog.e("IntelligentLuanchActivity", "action--" + action, "dataString--" + dataString,
                 "flags--" + flags,
                 "scheme--" + scheme,
                 "type--" + type)
 
+    }
+
+    private fun initTimer() {
+
+        compositeDisposable.add(
+                Observable.interval(30, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            imeiLogin()
+                        }
+        )
     }
 
     override fun showError(msg: String?) {
@@ -51,7 +69,11 @@ class IntelligentLuanchActivity : BaseActivity() {
         return false
     }
 
+    var compositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun initDate() {
+
+        /*startActivityForResult(Intent(this, CheckMappingActivity::class.java),55)
+        return*/
 
         mWeightManager.sendBytes(ConvertUtils.hexString2Bytes("55000001207403"))
         if (intent.action == "restart" || intent.type == "restart") {
@@ -59,13 +81,14 @@ class IntelligentLuanchActivity : BaseActivity() {
             finish()
             overridePendingTransition(0, 0)
         } else {
-            if (UserConfig.isLogin()) {
-                if (UserConfig.getType() == 0) {
-                    toMian()
-                }
-            } else {
-                toLogin()
-            }
+            initTimer()
+            /*   if (UserConfig.isLogin()) {
+                   if (UserConfig.getType() == 0) {
+                       toMian()
+                   }
+               } else {
+                   toLogin()
+               }*/
             // TODO: 2020/6/29 需要验证把上面去掉  把下面注释放掉即可
 
             /*  if (UserConfig.isAuth()) {
@@ -77,6 +100,52 @@ class IntelligentLuanchActivity : BaseActivity() {
               }*/
 
         }
+
+    }
+
+    private fun imeiLogin() {
+        val imei = PhoneUtil.getIMEI(this)
+        loading("正在自动登录...")
+        RxHttpUtils.createApi(ApiService::class.java)
+                .imeiLogin(imei)
+                .compose(Transformer.switchSchedulers())
+                .subscribe(object : CommonObserver<UseDo>() {
+                    override fun onError(errorMsg: String?) {
+                        cancelLoading()
+                        UserConfig.savaLogin(false)
+                        showShort(errorMsg)
+                        tvAdmin.visibility = View.GONE
+                        toLogin()
+
+                    }
+
+                    override fun onSuccess(info: UseDo?) {
+                        cancelLoading()
+                        //授权成功
+                        if (info != null && info.status == 1) {
+                            if (info.data.status == "0") {
+                                UserConfig.savaLogin(true)
+                                UserConfig.savaType(0)
+                                UserConfig.savaUserid(info.data.id)
+                                UserConfig.userInfo = info.data
+                                toMian()
+                                tvAdmin.visibility = View.GONE
+                                compositeDisposable.clear()
+                            } else {
+                                UserConfig.savaLogin(false)
+                                tvAdmin.visibility = View.VISIBLE
+                            }
+
+                        } else {
+                            UserConfig.savaLogin(false)
+                            showShort(info?.msg ?: "授权失败")
+                            tvAdmin.visibility = View.GONE
+//                            toLogin()
+                        }
+                    }
+
+
+                })
 
     }
 
@@ -140,6 +209,7 @@ class IntelligentLuanchActivity : BaseActivity() {
     }
 
     override fun release() {
+        compositeDisposable.clear()
     }
 
     private fun toMian() {
@@ -153,5 +223,12 @@ class IntelligentLuanchActivity : BaseActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
         overridePendingTransition(0, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val s = data?.getStringExtra("filePath") ?: ""
+        XLog.e("checkmap","回调"+s)
+        GlideUtil.displayImage(this,s,ivBg)
     }
 }

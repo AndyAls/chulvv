@@ -45,6 +45,15 @@ public class UserInfo implements Parcelable {
     private String pingallscore;
     private String pingusercount;
     private String full;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -174,6 +183,9 @@ public class UserInfo implements Parcelable {
         this.full = full;
     }
 
+    public UserInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -197,9 +209,7 @@ public class UserInfo implements Parcelable {
         dest.writeString(this.pingallscore);
         dest.writeString(this.pingusercount);
         dest.writeString(this.full);
-    }
-
-    public UserInfo() {
+        dest.writeString(this.status);
     }
 
     protected UserInfo(Parcel in) {
@@ -219,9 +229,10 @@ public class UserInfo implements Parcelable {
         this.pingallscore = in.readString();
         this.pingusercount = in.readString();
         this.full = in.readString();
+        this.status = in.readString();
     }
 
-    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
         @Override
         public UserInfo createFromParcel(Parcel source) {
             return new UserInfo(source);

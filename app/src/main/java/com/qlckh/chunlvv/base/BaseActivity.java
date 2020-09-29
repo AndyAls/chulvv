@@ -95,11 +95,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
 
     private void getSerialPort() {
-        mPanelManager=mApplication.getmPanelManager();
-        mPrintManager=mApplication.getmPrintManager();
-        mScanManager=mApplication.getmScanManager();
-        mWeightManager=mApplication.getmWeightManager();
+        mPanelManager = mApplication.getmPanelManager();
+        mPrintManager = mApplication.getmPrintManager();
+        mScanManager = mApplication.getmScanManager();
+        mWeightManager = mApplication.getmWeightManager();
     }
+
     protected boolean isImmersionBarEnabled() {
         return true;
     }
@@ -261,7 +262,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected abstract boolean isSetFondSize();
 
     protected void loading() {
-        LoadingView.showLoading(mActivity, "", false);
+        LoadingView.showLoading(mActivity, "请稍等...", false);
+    }
+
+    protected void loading(String msg) {
+        LoadingView.showLoading(mActivity, msg, true);
     }
 
     protected void cancelLoading() {

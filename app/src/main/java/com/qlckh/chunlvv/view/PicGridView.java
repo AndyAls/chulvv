@@ -1,6 +1,8 @@
 package com.qlckh.chunlvv.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class PicGridView extends ViewGroup {
         columNum = num;
         requestLayout();
     }
+
 
     public void setVisibleCount(int num) {
         this.visibleCount = num;

@@ -1,11 +1,13 @@
 package com.qlckh.chunlvv.intelligent
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
+import android.support.v7.app.AlertDialog
 import android.view.View
-import com.qlckh.chunlvv.App
 import com.qlckh.chunlvv.R
+import com.qlckh.chunlvv.ScoreDB
 import com.qlckh.chunlvv.activity.LoginActivity
 import com.qlckh.chunlvv.api.ApiService
 import com.qlckh.chunlvv.base.BaseActivity
@@ -17,13 +19,12 @@ import com.qlckh.chunlvv.http.observer.CommonObserver
 import com.qlckh.chunlvv.manager.OnSerialPortDataListener
 import com.qlckh.chunlvv.qidian.HomeMarkActivity
 import com.qlckh.chunlvv.user.UserConfig
-import io.reactivex.Flowable
-import io.reactivex.Observable
+import com.qlckh.chunlvv.utils.PhoneUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_intenlligent_mark.*
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -41,6 +42,7 @@ class IntenlligentMarkActivity : BaseActivity() {
     var j = 0
     var isStart = false
     private val SCAN_WHAT = 1010100
+
     /*override fun method(p0: String?) {
 
         runOnUiThread {
@@ -161,7 +163,7 @@ class IntenlligentMarkActivity : BaseActivity() {
         setTitle("巡检")
         goBack()
         ibRight.visibility = View.VISIBLE
-        ibRight.text = "退出登录"
+        ibRight.text = "设备号:   ${PhoneUtil.getIMEI(this)}"
         ibRight.setOnClickListener {
 
             /*   val intent = Intent(this,IntelligentLuanchActivity::class.java)
@@ -176,7 +178,7 @@ class IntenlligentMarkActivity : BaseActivity() {
                Handler().postDelayed({
                    android.os.Process.killProcess(android.os.Process.myPid());
                },20)*/
-            logout()
+//            logout()
         }
 
         tvSource.setOnClickListener {
@@ -191,7 +193,7 @@ class IntenlligentMarkActivity : BaseActivity() {
         UserConfig.reset()
         UserConfig.userInfo = null
         UserConfig.userResp = null
-        val intent1 = Intent(this, LoginActivity::class.java)
+        val intent1 = Intent(this, IntelligentLuanchActivity::class.java)
         intent1.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent1)
     }
@@ -212,10 +214,29 @@ class IntenlligentMarkActivity : BaseActivity() {
         return false
     }
 
+    private var disposable = CompositeDisposable()
     override fun initDate() {
         Handler().postDelayed({
             setScanListener()
         }, 1500)
+
+        disposable.add(
+                ScoreDB.getInstance().scoreDao.queryListObserver().subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            if (it == null || it.size == 0) {
+                                tv_num1.text = "0"
+                                flUpLoad.setOnClickListener {
+                                    showShort("没有待上传的数据")
+                                }
+                            } else {
+                                tv_num1.text = it.size.toString()
+                                flUpLoad.setOnClickListener {
+                                    startActivity(Intent(this, UpLoadListActivity::class.java))
+                                }
+                            }
+                        }
+        )
 
 
         /*  ReaderController = Reader(this)
@@ -251,7 +272,12 @@ class IntenlligentMarkActivity : BaseActivity() {
     private fun handScan(bytes: ByteArray) {
 
         buffer.append(ConvertUtils.bytes2HexString(bytes))
-        tvSource.text = buffer.toString()
+        if (!buffer.toString().startsWith("55")) {
+            buffer.delete(0, buffer.length)
+            return
+        }
+//        buffer.append("\n")
+//        tvSource.text = buffer.toString()
         if (buffer.length == 20) {
             queryData(buffer.toString().substring(8, 16))
             buffer.delete(0, buffer.length)
@@ -264,12 +290,18 @@ class IntenlligentMarkActivity : BaseActivity() {
                 .compose(Transformer.switchSchedulers())
                 .subscribe(object : CommonObserver<HomeInfo>() {
                     override fun onError(errorMsg: String?) {
+                        if (buffer.isNotEmpty()) {
+                            buffer.delete(0, buffer.length)
+                        }
                         cancelLoading()
                         showLong(errorMsg)
                     }
 
                     override fun onSuccess(homeInfo: HomeInfo?) {
                         cancelLoading()
+                        if (buffer.isNotEmpty()) {
+                            buffer.delete(0, buffer.length)
+                        }
                         if (homeInfo == null) {
                             showLong("获取用户信息失败")
                             i = 0
@@ -332,6 +364,7 @@ class IntenlligentMarkActivity : BaseActivity() {
         compositeDisposable1.clear()
         RxHttpUtils.cancelAllRequest()
         isStart = true
+        disposable.clear()
 //        ReaderController.CloseSerialPort_Android()
 //        ReaderController.CloseSerialPort_Android()
     }

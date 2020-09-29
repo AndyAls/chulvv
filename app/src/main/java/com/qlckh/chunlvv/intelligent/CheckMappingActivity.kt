@@ -1,20 +1,31 @@
 package com.qlckh.chunlvv.intelligent
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.media.MediaActionSound
+import android.os.Build
 import android.os.Handler
+import android.support.annotation.RequiresApi
+import android.support.v7.app.AlertDialog
+import android.view.View
 import android.view.ViewTreeObserver
+import com.lzy.imagepicker.util.BitmapUtil
 import com.qlckh.chunlvv.R
 import com.qlckh.chunlvv.base.BaseActivity
 import com.qlckh.chunlvv.common.CaptureBean
+import com.qlckh.chunlvv.common.XLog
 import com.qlckh.chunlvv.http.utils.ToastUtils.showToast
 import com.qlckh.chunlvv.preview.PicSavaUtil
 import com.qlckh.chunlvv.qidian.HomeMarkActivity
+import com.qlckh.chunlvv.utils.ImgUtil
+import com.qlckh.chunlvv.utils.PhoneUtil
 import io.fotoapparat.Fotoapparat
+import io.fotoapparat.characteristic.LensPosition
+import io.fotoapparat.characteristic.toCameraId
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.result.WhenDoneListener
 import io.fotoapparat.selector.*
@@ -23,8 +34,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_check_mapping.*
+import kotlinx.android.synthetic.main.fragment_image_photo_layout.*
 import java.io.File
 import java.lang.ref.WeakReference
+import java.util.concurrent.TimeUnit
 
 /**
  * @author Andy
@@ -62,15 +75,9 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
     }
 
 
-    override fun onBackPressed() {
-        if (Camera.captureing) {
-            return
-        }
-        super.onBackPressed()
-    }
-
-
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     override fun initView() {
+        header.visibility = View.GONE
         when (CaptureBean.camera) {
             "font" -> {
                 activeCamera = Camera.Front
@@ -87,13 +94,44 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
                 context = this,
                 view = cameraView,
                 focusView = focusView,
-                logger = io.fotoapparat.log.none(),
+                logger = io.fotoapparat.log.logcat(),
                 lensPosition = activeCamera.lensPosition,
                 cameraConfiguration = activeCamera.configuration,
                 cameraErrorCallback = {
-                    showToast(it.message)
+                    /*  isCameraErr = true
+  //                    showLong(it.message)
+                      if (!isFinishing && !isDestroyed) {
+                          val intent = intent
+                          intent.putExtra("filePath", "")
+                          setResult(Activity.RESULT_OK, intent)
+                          finish()
+                      }*/
                 }
         )
+        fotoapparat.start()
+        val available = fotoapparat.isAvailable {
+            LensPosition.Front
+        }
+        if (available) {
+            Camera.init(this, cameraRect, fotoapparat, intent)
+            Camera.captureing = false
+            Camera.isPlayingSuit = false
+            Handler().postDelayed({
+                capturePhoto()
+            }, 200)
+
+        } else {
+            Handler().postDelayed({
+                if (!isFinishing && !isDestroyed) {
+                    val intent = intent
+                    intent.putExtra("filePath", "")
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                }
+            }, 100)
+
+        }
+
 
     }
 
@@ -104,6 +142,7 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
     /**
      * 拍照
      */
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private fun capturePhoto() {
         Camera.capturePhoto()
     }
@@ -140,23 +179,18 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
 
     override fun onStart() {
         super.onStart()
-        fotoapparat.start()
 
     }
 
     override fun onStop() {
         super.onStop()
         fotoapparat.stop()
+
     }
 
+    private var isCameraErr = false
     override fun initDate() {
-        Camera.init(this, cameraRect, fotoapparat, intent)
-        Camera.captureing = false
-        Camera.isPlayingSuit = false
 
-        Handler().postDelayed({
-            capturePhoto()
-        }, 50)
     }
 
     override fun onResume() {
@@ -179,6 +213,7 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
         Camera.handDisposables.clear()
         Camera.captureing = false
         Camera.startFrame = false
+        isCameraErr = false
     }
 
     private sealed class Camera(
@@ -187,7 +222,7 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
     ) {
 
         object Back : Camera(
-                lensPosition = back(),
+                lensPosition = external(),
                 configuration = CameraConfiguration(
 
                         previewResolution = firstAvailable(
@@ -217,13 +252,16 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
                         previewFpsRange = highestFps(),
                         flashMode = off(),
                         focusMode = firstAvailable(
-                                fixed(),
-                                autoFocus()
+                                continuousFocusPicture(),
+                                autoFocus(),
+                                fixed()
+
                         ),
 
                         frameProcessor = {
 //                            handFrame(it)
                         }
+
                 )
         )
 
@@ -264,34 +302,62 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
             /**
              * 拍照
              */
+            @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
             fun capturePhoto() {
+                XLog.e("checkmap", "开始" + Thread.currentThread())
                 val photoResult = fotoapparat
                         .takePicture()
                 MediaActionSound().play(MediaActionSound.SHUTTER_CLICK);
                 val savaPath = PicSavaUtil.getSavaPath(weakReference.get())
                 val file = File(savaPath, "car_play_" + System.currentTimeMillis() + ".jpg")
-                photoResult.saveToFile(file).transform {
-                    file.toString()
-                }.whenAvailable {
-                    weakReference.get()?.let { context ->
-                        captureing = false
 
-                        /*   val intent = Intent(context, HomeMarkActivity::class.java)
-                                   .apply {
-                                       //传递bitmap过大 会崩溃 使用静态变量来保存
-                                       CaptureBean.bitmap = bitmap
-                                       CaptureBean.file = file
-                                       putExtra("filePath", file.path)
-                                   }
-                           context.startActivity(intent)*/
+                val subscribe = Observable.create<File> { emitter ->
+                    photoResult.saveToFile(file).transform {
+                        file
+                    }.whenAvailable {
+                        emitter.onNext(it ?: File(file.toString()))
+                    }
+                }.map {
+                    it.toString()
+                }.delay(0, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.single())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+
+                            XLog.e("checkmap", "subscribe了" + it)
+                            weakReference.get()?.let { context ->
+                                captureing = false
+                                if (!context.isFinishing && !context.isDestroyed) {
+                                    val intent = context.intent
+                                    intent.putExtra("filePath", it)
+                                    context.setResult(Activity.RESULT_OK, intent)
+                                    context.finish()
+                                }
+
+                            }
+                        }
+                handDisposables.add(subscribe)
+
+                /* try {
+                     photoResult.saveToFile(file).transform {
+                         file.toString()
+                     }.whenAvailable {
+                         XLog.e("checkmap", "finsh了" + Thread.currentThread())
 
 
+                     }
+                 } catch (e: Exception) {
+
+                     XLog.e("checkmap", "Exception了")
+                 }*/
+                val context = weakReference.get()
+                Handler().postDelayed({
+                    if (context != null && !context.isFinishing && !context.isDestroyed) {
                         val intent = context.intent
-                        intent.putExtra("filePath", it)
+                        intent.putExtra("filePath", "")
                         context.setResult(Activity.RESULT_OK, intent)
                         context.finish()
                     }
-                }
+                }, 5000)
                 return
                 val disposable = Observable
                         .create<Bitmap> { emitter ->

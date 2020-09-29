@@ -53,7 +53,7 @@ import retrofit2.http.QueryMap;
  */
 public interface ApiService {
 
-    long DEFAULT_TIME = 120;
+    long DEFAULT_TIME = 12;
     String IMG_URL = "http://chunlv.hanziyi.cn/Uploads/Public/";
     String BASE_URL = "http://qidian.365igc.cn/";
 
@@ -64,6 +64,13 @@ public interface ApiService {
     @POST("index.php/Api/index/login")
     Observable<UseDo> login(@Field("username") String name,
                             @Field("pwd") String pwd, @Field("status") int type);
+
+    /**
+     * 设备登录接口
+     */
+    @FormUrlEncoded
+    @POST("api/jqi/colluser")
+    Observable<UseDo> imeiLogin(@Field("code") String imei);
 
     /**
      * banner图
@@ -416,7 +423,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/jqi/pfen_news_hl_new")
-    Observable<Object> mark1(@Field("n_code") String userId, @Field("status") int status, @Field("uid") String uid,
+    Observable<Object> mark1(@Field("id") String id, @Field("n_code") String userId, @Field("status") int status, @Field("uid") String uid,
                              @Field("img") String img, @Field("jifen") String jifen, @Field("weight") String wegit,
                              @Field("flag_status") String flag_status, @Field("flag_status1") String flag_status1,
                              @Field("flag_status2") String flag_status2, @Field("flag_status3") String flag_status3);
@@ -425,10 +432,12 @@ public interface ApiService {
     @POST("api/jqi/pfen_news_hl_img")
     Observable<PostImgDao> postImg(@Field("uid") String uid, @Field("img") String img);
 
+
     @FormUrlEncoded
     @POST("kyu/index/squan")
     Observable<StoreDao> auth(@Field("yuming") String yuming, @Field("imei") String imei,
                               @Field("fullname") String fullname, @Field("username") String username,
                               @Field("phone") String phone, @Field("ma") String ma);
+
 
 }

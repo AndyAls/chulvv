@@ -4,8 +4,13 @@
     package="com.qlckh.chunlvv"
     android:installLocation="internalOnly">
 
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- 这个权限用于进行网络定位-->
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -44,7 +49,6 @@
     <uses-permission
         android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
-
 
     <uses-sdk tools:overrideLibrary="com.previewlibrary"></uses-sdk>
     <application
@@ -86,8 +90,6 @@
             android:theme="@style/startAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -245,7 +247,9 @@
         <activity android:name=".carpaly.SettingPortActivity" />
         <activity android:name=".intelligent.AuthActivity" />
         <activity android:name=".intelligent.CheckMappingActivity" />
-
+        <activity
+            android:name=".intelligent.UpLoadListActivity"
+            android:screenOrientation="landscape" />
 
         <!-- FileProvider配置访问路径，适配7.0及其以上 -->
         <provider

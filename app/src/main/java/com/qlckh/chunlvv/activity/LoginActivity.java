@@ -162,20 +162,26 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         int status = info.getStatus();
         //登录成功
         if (status == 1) {
-            UserConfig.savaLogin(true);
-            UserConfig.savaUserName(phoneEdit.getText().toString().trim());
-            UserConfig.savaType(userType);
-            UserConfig.savaPwd(passwordEdit.getText().toString().trim());
-            UserConfig.savaUserid(info.getData().getId());
-            UserConfig.userInfo = info.getData();
-            if (userType == 0) {
-                startActivity(new Intent(this, IntenlligentMarkActivity.class));
-                finish();
-                overridePendingTransition(0, 0);
+            if ("0".equals(info.getData().getStatus())) {
+                UserConfig.savaLogin(true);
+                UserConfig.savaUserName(phoneEdit.getText().toString().trim());
+                UserConfig.savaType(userType);
+                UserConfig.savaPwd(passwordEdit.getText().toString().trim());
+                UserConfig.savaUserid(info.getData().getId());
+                UserConfig.userInfo = info.getData();
+                if (userType == 0) {
+                    startActivity(new Intent(this, IntenlligentMarkActivity.class));
+                    finish();
+                    overridePendingTransition(0, 0);
 //                toMian();
+                } else {
+                    toXmain();
+                }
             } else {
-                toXmain();
+                showShort("暂时无权限登录,请联系管理官");
+                UserConfig.savaLogin(false);
             }
+
         } else {
             showShort("请确定密码账号和用户角色选择是否正确");
             UserConfig.savaLogin(false);

@@ -29,6 +29,7 @@ import java.security.InvalidParameterException;
 import android_serialport_api.SerialPort;
 import android_serialport_api.SerialPortFinder;
 import butterknife.ButterKnife;
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import cat.ereza.customactivityoncrash.activity.DefaultErrorActivity;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 
@@ -66,9 +67,10 @@ public class App extends Application {
     private void initCrash() {
 
         CaocConfig.Builder.create()
-                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
+                .backgroundMode(CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
                 .enabled(true) //default: true
                 .showErrorDetails(true) //default: true
+                .trackActivities(true)
                 .showRestartButton(true) //default: true
                 .logErrorOnRestart(true) //default: true
                 .trackActivities(true) //default: false

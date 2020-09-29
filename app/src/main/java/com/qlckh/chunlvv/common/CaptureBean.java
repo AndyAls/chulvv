@@ -13,6 +13,6 @@ public class CaptureBean {
 
     public static Bitmap bitmap=null;
     public static File file=null;
-    public static String camera="back";
+    public static String camera="font";
 
 }

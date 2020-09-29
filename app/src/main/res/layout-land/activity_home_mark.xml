@@ -20,7 +20,7 @@
             android:padding="@dimen/dp5"
             android:text="注意:如果称重偏差太大,请先把称上面的东西拿掉,点击下面归零按钮后重新称取"
             android:textColor="@color/red"
-            android:textSize="@dimen/sp25"
+            android:textSize="@dimen/sp16"
             android:textStyle="bold"
             android:visibility="visible" />
 
@@ -75,9 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="用户姓名:"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:layout_marginLeft="@dimen/dp6"
                     android:text="用户姓名:用"
                     android:textColor="#000000"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22" />
             </LinearLayout>
 
 
@@ -103,9 +103,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="用户住址:"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -115,14 +115,14 @@
                     android:layout_marginLeft="@dimen/dp6"
                     android:text="用户姓名:名"
                     android:textColor="#000000"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp6"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -135,8 +135,8 @@
                     android:layout_height="wrap_content"
                     android:text="桶是否摆放正确"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTong1"
@@ -149,9 +149,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="好"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTong2"
@@ -164,9 +164,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="差"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -181,8 +181,8 @@
                     android:layout_marginLeft="@dimen/dp15"
                     android:text="庭院是否整洁"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTing1"
@@ -195,9 +195,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="好"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvTing2"
@@ -210,16 +210,16 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="差"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp6"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -232,8 +232,8 @@
                     android:layout_height="wrap_content"
                     android:text="桶身是否清洁    "
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvSheng1"
@@ -246,9 +246,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="好"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvSheng2"
@@ -261,9 +261,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="差"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -277,9 +277,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp15"
                     android:text="垃圾是否入桶"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvLa1"
@@ -292,9 +292,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="好"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvLa2"
@@ -307,16 +307,16 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="差"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp6"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -329,15 +329,15 @@
                     android:layout_height="wrap_content"
                     android:text="评价"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="评价评价评"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30"
+                    android:textSize="@dimen/dp22"
                     android:textStyle="bold"
                     android:visibility="invisible" />
 
@@ -352,9 +352,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="好"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvPing2"
@@ -367,9 +367,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="中"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -383,9 +383,9 @@
                     android:paddingTop="@dimen/dp8"
                     android:paddingBottom="@dimen/dp8"
                     android:text="差"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -427,7 +427,7 @@
                     android:padding="@dimen/dp5"
                     android:text="好"
                     android:textColor="@color/status_green"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20" />
 
 
                 <RadioButton
@@ -439,7 +439,7 @@
                     android:padding="@dimen/dp5"
                     android:text="中"
                     android:textColor="@color/font_org_color"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20" />
 
 
                 <RadioButton
@@ -451,7 +451,7 @@
                     android:padding="@dimen/dp5"
                     android:text="差"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/sp25" />
+                    android:textSize="@dimen/dp20" />
             </RadioGroup>
 
         </LinearLayout>
@@ -459,9 +459,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp8"
             android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp15">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -472,9 +472,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="得分:  "
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -483,8 +483,8 @@
                     android:layout_height="wrap_content"
                     android:text="5"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/sp30"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -500,9 +500,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="称重:"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etWeight"
@@ -520,7 +520,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="@color/red"
-                    android:textSize="@dimen/sp25"
+                    android:textSize="@dimen/dp20"
                     android:textStyle="bold" />
 
                 <TextView
@@ -529,9 +529,9 @@
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:text="kg"
-                    android:textStyle="bold"
                     android:textColor="@color/text_color_normal"
-                    android:textSize="@dimen/sp30" />
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -545,12 +545,12 @@
                     android:layout_height="wrap_content"
                     android:text="拍照:"
                     android:textColor="@color/text_color_normal"
-                    android:textSize="@dimen/sp30"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/dp22"
+                    android:textStyle="bold" />
 
                 <com.qlckh.chunlvv.view.PicGridView
                     android:id="@+id/picModify"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/dp60"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp15"
                     android:layout_marginRight="@dimen/dp20"
@@ -566,15 +566,15 @@
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
             android:background="@drawable/bg_btn_sign"
             android:gravity="center"
+            android:paddingTop="@dimen/dp6"
+            android:paddingBottom="@dimen/dp6"
             android:text="提交评价"
-            android:paddingBottom="@dimen/dp15"
-            android:layout_marginTop="@dimen/dp15"
-            android:paddingTop="@dimen/dp15"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="55sp"
-            android:visibility="visible" />
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

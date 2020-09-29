@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp30"
+    android:layout_marginTop="@dimen/dp10"
+    android:layout_marginRight="@dimen/dp30"
+    app:cardCornerRadius="@dimen/dp8"
+    app:cardElevation="@dimen/dp2"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/dp15">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp2"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户姓名:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp6"
+                android:text="用户姓名:用"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp30" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp12"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户地址:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp6"
+                android:text="用户姓名:用"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp30" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp12"
+            android:gravity="center_vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="称重:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:background="@drawable/bg_editext_default"
+                android:clickable="false"
+                android:enabled="false"
+                android:hint="0"
+                android:paddingLeft="@dimen/dp35"
+                android:paddingTop="@dimen/dp3"
+                android:paddingRight="@dimen/dp35"
+                android:paddingBottom="@dimen/dp3"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp25"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp5"
+                android:text="kg"
+                android:textColor="@color/text_color_normal"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp12"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="得分:  "
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp30"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSumbit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp"
+                android:background="@drawable/boc_check_status2"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:clickable="true"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
