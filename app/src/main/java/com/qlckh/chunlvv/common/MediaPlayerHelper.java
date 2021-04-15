@@ -6,7 +6,8 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.support.annotation.RawRes;
+
+import androidx.annotation.RawRes;
 
 import java.util.ArrayList;
 import java.util.List;

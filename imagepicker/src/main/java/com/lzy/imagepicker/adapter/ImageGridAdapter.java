@@ -2,7 +2,6 @@ package com.lzy.imagepicker.adapter;
 
 import android.Manifest;
 import android.app.Activity;
-import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;

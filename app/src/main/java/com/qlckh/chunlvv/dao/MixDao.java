@@ -2,7 +2,7 @@ package com.qlckh.chunlvv.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * @author Andy

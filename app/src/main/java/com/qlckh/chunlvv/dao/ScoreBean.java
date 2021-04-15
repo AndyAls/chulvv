@@ -1,8 +1,8 @@
 package com.qlckh.chunlvv.dao;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
 import org.w3c.dom.Text;
 

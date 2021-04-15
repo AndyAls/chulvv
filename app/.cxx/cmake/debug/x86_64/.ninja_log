@@ -1,0 +1,6 @@
+# ninja log v5
+0	9	0	clean	fa2febc325648e13
+0	8	0	clean	fa2febc325648e13
+1	327	640073402	CMakeFiles/SerialPort.dir/SerialPort.c.o	a74c972c47bc82ca
+329	786	640073402	D:/07chunlv/app/build/intermediates/cmake/debug/obj/x86_64/libSerialPort.so	da8a533e872bfa9f
+38	392	640081514	D:/07chunlv/app/build/intermediates/cmake/debug/obj/x86_64/libSerialPort.so	da8a533e872bfa9f

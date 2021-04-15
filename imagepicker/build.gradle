@@ -16,14 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    ndkVersion '22.1.7171670'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
-    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'androidx.appcompat:appcompat:1.0.0'
     compileOnly 'com.commit451:PhotoView:1.2.4'
-    api 'com.android.support:recyclerview-v7:27.1.1'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }

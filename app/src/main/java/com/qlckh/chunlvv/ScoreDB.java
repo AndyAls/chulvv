@@ -1,9 +1,10 @@
 package com.qlckh.chunlvv;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
+
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.qlckh.chunlvv.dao.ScoreBean;
 import com.qlckh.chunlvv.dao.ScoreDao;
@@ -16,7 +17,7 @@ import com.qlckh.chunlvv.dao.ScoreDao;
 
 @Database(entities = {ScoreBean.class},version = 1,exportSchema = false)
 @TypeConverters(TagsConver.class)
-public abstract class ScoreDB extends RoomDatabase{
+public abstract class ScoreDB extends RoomDatabase {
     private final static String SCORE_DB_NAME="ScoreDB.db";
     private static volatile ScoreDB instance;
 

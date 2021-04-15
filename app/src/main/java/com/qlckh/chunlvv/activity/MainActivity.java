@@ -2,10 +2,11 @@ package com.qlckh.chunlvv.activity;
 
 import android.content.Intent;
 import android.graphics.Rect;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.adapter.MainAdapter;

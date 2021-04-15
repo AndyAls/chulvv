@@ -197,8 +197,10 @@ class CheckMappingActivity : BaseActivity(), ViewTreeObserver.OnGlobalLayoutList
                         previewFpsRange = highestFps(),
                         flashMode = off(),
                         focusMode = firstAvailable(
-                                autoFocus(),
-                                continuousFocusPicture()
+                                fixed(),
+                                continuousFocusPicture(),
+                                autoFocus()
+
 
                         ),
                         frameProcessor = {

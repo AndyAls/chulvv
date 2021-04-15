@@ -1,13 +1,15 @@
 package com.lzy.imagepicker.ui;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.viewpager.widget.ViewPager;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -23,6 +25,7 @@ import com.lzy.imagepicker.R;
  */
 public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
 
+    @SuppressLint("StringFormatMatches")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         builder.setMessage("要删除这张照片吗？");
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @SuppressLint("StringFormatMatches")
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //移除当前图片刷新界面

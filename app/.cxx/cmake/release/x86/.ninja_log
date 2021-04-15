@@ -1,0 +1,7 @@
+# ninja log v5
+0	661	640004700	CMakeFiles/SerialPort.dir/SerialPort.c.o	27037c16afb944ca
+913	1576	640004701	D:/07chunlv/app/build/intermediates/cmake/release/obj/x86/libSerialPort.so	9a9cf2c451ac4869
+1	9	0	clean	fa2febc325648e13
+0	9	0	clean	fa2febc325648e13
+2	683	640081839	CMakeFiles/SerialPort.dir/SerialPort.c.o	27037c16afb944ca
+683	769	640081839	D:/07chunlv/app/build/intermediates/cmake/release/obj/x86/libSerialPort.so	9a9cf2c451ac4869

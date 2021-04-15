@@ -2,8 +2,8 @@ package com.qlckh.chunlvv.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,11 +16,9 @@ import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.http.interceptor.Transformer;
 import com.qlckh.chunlvv.http.observer.CommonObserver;
 import com.qlckh.chunlvv.qidian.HomeMarkActivity;
-import com.qlckh.chunlvv.qidian.HomeSysActivity;
 import com.qlckh.chunlvv.user.UserConfig;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bertsir.zbar.QrConfig;
 import cn.bertsir.zbar.QrManager;

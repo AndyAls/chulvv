@@ -99,7 +99,6 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.zaaach.citypicker.CityPickerActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
@@ -249,7 +248,7 @@
 
         <!-- FileProvider配置访问路径，适配7.0及其以上 -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

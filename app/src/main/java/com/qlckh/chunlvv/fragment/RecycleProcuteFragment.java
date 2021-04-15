@@ -2,8 +2,8 @@ package com.qlckh.chunlvv.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qlckh.chunlvv.R;
-import com.qlckh.chunlvv.activity.RecycleActivity;
 import com.qlckh.chunlvv.activity.RecycleFromActivity;
-import com.qlckh.chunlvv.activity.SelectActivity;
 import com.qlckh.chunlvv.adapter.FastAdapter;
 import com.qlckh.chunlvv.api.ApiService;
 import com.qlckh.chunlvv.base.BaseMvpFragment;
 import com.qlckh.chunlvv.dao.CategoryDao;
 import com.qlckh.chunlvv.dao.CommonDao;
-import com.qlckh.chunlvv.dao.GuanDao;
 import com.qlckh.chunlvv.dao.ProcuteDao;
-import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.impl.RecycleProcutePresenterImpl;
 import com.qlckh.chunlvv.presenter.RecycleProcutePresenter;
 import com.qlckh.chunlvv.utils.GlideUtil;
@@ -32,7 +28,6 @@ import com.qlckh.chunlvv.utils.GlideUtil;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**

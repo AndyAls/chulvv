@@ -5,10 +5,6 @@
     <color name="theme_body">#cc22292c</color>
     <color name="top_bar">#9f556061</color>
     <color name="transparent">#00000000</color>
-    <declare-styleable name="CropImageView"><attr format="color" name="cropMaskColor"/><attr format="color" name="cropBorderColor"/><attr format="dimension" name="cropBorderWidth"/><attr format="dimension" name="cropFocusWidth"/><attr format="dimension" name="cropFocusHeight"/><attr format="enum" name="cropStyle">
-            <enum name="rectangle" value="0"/>
-            <enum name="circle" value="1"/>
-        </attr></declare-styleable>
     <string name="all_images">全部图片</string>
     <string name="complete">完成</string>
     <string name="folder_image_count">共%1$d张</string>
@@ -34,4 +30,15 @@
         <!-- 指定消失的动画xml -->
         <item name="android:windowExitAnimation">@anim/hide_to_bottom</item>
     </style>
+    <declare-styleable name="CropImageView">
+        <attr format="color" name="cropMaskColor"/>
+        <attr format="color" name="cropBorderColor"/>
+        <attr format="dimension" name="cropBorderWidth"/>
+        <attr format="dimension" name="cropFocusWidth"/>
+        <attr format="dimension" name="cropFocusHeight"/>
+        <attr format="enum" name="cropStyle">
+            <enum name="rectangle" value="0"/>
+            <enum name="circle" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>

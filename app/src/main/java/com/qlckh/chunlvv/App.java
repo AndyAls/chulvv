@@ -3,7 +3,7 @@ package com.qlckh.chunlvv;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
 import com.qlckh.chunlvv.api.ApiService;

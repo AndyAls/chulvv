@@ -1,0 +1,7 @@
+Executable : D:\sdk\cmake\3.10.2.4988404\bin\ninja.exe
+arguments : 
+-C
+D:\07chunlv\app\.cxx\cmake\debug\x86_64
+SerialPort
+jvmArgs : 
+

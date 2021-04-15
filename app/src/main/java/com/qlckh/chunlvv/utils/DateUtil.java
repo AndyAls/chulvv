@@ -2,7 +2,6 @@ package com.qlckh.chunlvv.utils;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.format.Time;
 
 import java.text.SimpleDateFormat;

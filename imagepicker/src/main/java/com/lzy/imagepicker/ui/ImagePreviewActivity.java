@@ -1,14 +1,16 @@
 package com.lzy.imagepicker.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -34,6 +36,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
     private Button mBtnOk;                         //确认图片的选择
     private View bottomBar;
 
+    @SuppressLint("StringFormatMatches")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +94,7 @@ public class ImagePreviewActivity extends ImagePreviewBaseActivity implements Im
      * 图片添加成功后，修改当前图片的选中数量
      * 当调用 addSelectedImageItem 或 deleteSelectedImageItem 都会触发当前回调
      */
+    @SuppressLint("StringFormatMatches")
     @Override
     public void onImageSelected(int position, ImageItem item, boolean isAdd) {
         if (imagePicker.getSelectImageCount() > 0) {

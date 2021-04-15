@@ -2,8 +2,8 @@ package com.qlckh.chunlvv.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +42,7 @@ import com.qlckh.chunlvv.view.CustomGridView;
 import com.qlckh.chunlvv.view.MainView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.zaaach.citypicker.CityPickerActivity;
+//import com.zaaach.citypicker.CityPickerActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -225,8 +225,8 @@ public class HomePageFragment extends BaseMvpFragment<MainPresenter> implements 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PICK_CITY) {
             if (data != null) {
-                String city = data.getStringExtra(CityPickerActivity.KEY_PICKED_CITY);
-                locationTv.setText(city);
+//                String city = data.getStringExtra(CityPickerActivity.KEY_PICKED_CITY);
+//                locationTv.setText(city);
             }
         }
     }
@@ -265,8 +265,8 @@ public class HomePageFragment extends BaseMvpFragment<MainPresenter> implements 
         switch (view.getId()) {
             case R.id.location_tv:
                 //定位
-                startActivityForResult(new Intent(getActivity(), CityPickerActivity.class),
-                        REQUEST_CODE_PICK_CITY);
+                /*startActivityForResult(new Intent(getActivity(), CityPickerActivity.class),
+                        REQUEST_CODE_PICK_CITY);*/
                 break;
             case R.id.tv_more:
                 //新闻更多

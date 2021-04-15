@@ -1,14 +1,12 @@
 package com.qlckh.chunlvv.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.qlckh.chunlvv.R;
@@ -17,10 +15,8 @@ import com.qlckh.chunlvv.base.BaseMvpFragment;
 import com.qlckh.chunlvv.common.XLog;
 import com.qlckh.chunlvv.dao.CommonDao;
 import com.qlckh.chunlvv.dao.OrderDao;
-import com.qlckh.chunlvv.http.RxHttpUtils;
 import com.qlckh.chunlvv.impl.ConfirmOrderPresenterImpl;
 import com.qlckh.chunlvv.presenter.ConfirmOrderPresenter;
-import com.qlckh.chunlvv.user.UserConfig;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;

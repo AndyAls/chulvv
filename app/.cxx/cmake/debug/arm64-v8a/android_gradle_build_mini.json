@@ -1,0 +1,21 @@
+{
+  "buildFiles": [
+    "D:\\07chunlv\\app\\src\\main\\cpp\\CMakeLists.txt",
+    "D:\\sdk\\ndk\\22.1.7171670\\build\\cmake\\android.toolchain.cmake",
+    "D:\\sdk\\ndk\\22.1.7171670\\build\\cmake\\platforms.cmake",
+    "D:\\sdk\\ndk\\22.1.7171670\\build\\cmake\\compiler_id.cmake"
+  ],
+  "cleanCommands": [
+    "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"D:\\07chunlv\\app\\.cxx\\cmake\\debug\\arm64-v8a\" clean"
+  ],
+  "buildTargetsCommand": "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"D:\\07chunlv\\app\\.cxx\\cmake\\debug\\arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "SerialPort-Debug-arm64-v8a": {
+      "artifactName": "SerialPort",
+      "buildCommand": "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"D:\\07chunlv\\app\\.cxx\\cmake\\debug\\arm64-v8a\" SerialPort",
+      "abi": "arm64-v8a",
+      "output": "D:\\07chunlv\\app\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libSerialPort.so",
+      "runtimeFiles": []
+    }
+  }
+}

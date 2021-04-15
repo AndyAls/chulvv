@@ -1,9 +1,9 @@
 package com.qlckh.chunlvv.activity;
 
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.gyf.barlibrary.ImmersionBar;
 import com.qlckh.chunlvv.App;
 import com.qlckh.chunlvv.R;
 import com.qlckh.chunlvv.base.BaseActivity;
